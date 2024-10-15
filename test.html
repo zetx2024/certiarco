@@ -130,7 +130,7 @@
             firstPage.drawText(studentId, { x: 720, y: 500, size: 12 });
 
             // Generate QR code
-            const qrData = `Name: ${studentName}\n, ID: ${studentId}\n, Program: ${program}\n`;
+            const qrData = `Name: ${studentName}\n ID: ${studentId}\n Program: ${program}\n Date: ${date} to ${to}\n Verify at: https://cert.iarco.org`;
             generateQRCode(qrData, async function (qrDataUrl) {
                 const qrImageBytes = await fetch(qrDataUrl).then(res => res.arrayBuffer());
                 const qrImage = await pdfDoc.embedPng(qrImageBytes);
