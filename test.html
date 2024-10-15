@@ -130,7 +130,7 @@
             firstPage.drawText(studentId, { x: 720, y: 500, size: 12 });
 
             // Generate QR code
-            const qrData = `Name: ${studentName}\n ID: ${studentId}\n Program: ${program}\n Date: ${date} to ${to}\n Verify at: https://cert.iarco.org`;
+            const qrData = `ID: ${studentId}\nName: ${studentName}\nProgram: ${program}\nDate: ${date} to ${to}\nVerify at: https://cert.iarco.org`;
             generateQRCode(qrData, async function (qrDataUrl) {
                 const qrImageBytes = await fetch(qrDataUrl).then(res => res.arrayBuffer());
                 const qrImage = await pdfDoc.embedPng(qrImageBytes);
@@ -151,7 +151,7 @@
         pdfDoc.setKeywords(['IARCO', 'competition', 'university', 'year', 'research', 'school', 'program']);
         pdfDoc.setProducer('Md Sanaul Haque Shanto');
         pdfDoc.setCreator('IARCO (https://cert.iarco.org)');
-        pdfDoc.setCreationDate(1999/12/10);
+        pdfDoc.setCreationDate(new Date('2019/12/01'));
         pdfDoc.setModificationDate(new Date());
 
                 const pdfBytes = await pdfDoc.save();
