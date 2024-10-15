@@ -151,7 +151,7 @@
         pdfDoc.setKeywords(['IARCO', 'competition', 'university', 'year', 'research', 'school', 'program']);
         pdfDoc.setProducer('Md Sanaul Haque Shanto');
         pdfDoc.setCreator('IARCO (https://cert.iarco.org)');
-        pdfDoc.setCreationDate(20-10-2024);
+        pdfDoc.setCreationDate(new Date());
         pdfDoc.setModificationDate(new Date());
 
                 const pdfBytes = await pdfDoc.save();
