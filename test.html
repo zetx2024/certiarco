@@ -111,14 +111,14 @@
             });
             firstPage.drawText(program, { x: 410, y: 342, size: 15 });
             firstPage.drawText(`${date} to ${to}`, { x: 320, y: 300, size: 14 });
-            firstPage.drawText(studentId, { x: 720, y: 420, size: 12 });
+            firstPage.drawText(studentId, { x: 720, y: 500, size: 12 });
 
             // Generate QR code
             const qrData = `Name: ${studentName}, ID: ${studentId}, Program: ${program}`;
             generateQRCode(qrData, async function (qrDataUrl) {
                 const qrImageBytes = await fetch(qrDataUrl).then(res => res.arrayBuffer());
                 const qrImage = await pdfDoc.embedPng(qrImageBytes);
-                const qrSize = 60;
+                const qrSize = 70;
                 firstPage.drawImage(qrImage, {
                     x: 700,
                     y: 400,
