@@ -36,7 +36,7 @@
     <div class="container">
         <h2 align="center">Verify Identity & Certificate</h2>
         <h3 align="center">IARCO</h3>
-        <center><button><a href="https://yrjournal.org">Home</a></button></center>
+        <center><button><a href="https://iarco.org">Home</a></button></center>
         <p align="center">Allow pop-up for this site to download Certificate.</p>
         <p align="center">Use Google Chrome Browser for Better Download option.</p>
         <div align="center">
@@ -134,7 +134,7 @@
             generateQRCode(qrData, async function (qrDataUrl) {
                 const qrImageBytes = await fetch(qrDataUrl).then(res => res.arrayBuffer());
                 const qrImage = await pdfDoc.embedPng(qrImageBytes);
-                const qrSize = 100;
+                const qrSize = 90;
                 firstPage.drawImage(qrImage, {
                     x: 700,
                     y: 400,
@@ -151,7 +151,7 @@
         pdfDoc.setKeywords(['IARCO', 'competition', 'university', 'year', 'research', 'school', 'program']);
         pdfDoc.setProducer('Md Sanaul Haque Shanto');
         pdfDoc.setCreator('IARCO (https://cert.iarco.org)');
-        pdfDoc.setCreationDate(new Date());
+        pdfDoc.setCreationDate(1999/12/10);
         pdfDoc.setModificationDate(new Date());
 
                 const pdfBytes = await pdfDoc.save();
@@ -164,8 +164,8 @@
             qrElement.innerHTML = '';
             new QRCode(qrElement, {
                 text: text,
-                width: 100,
-                height: 100,
+                width: 90,
+                height: 90,
                 correctLevel: QRCode.CorrectLevel.H
             });
             setTimeout(() => {
