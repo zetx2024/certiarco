@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate Generator with QR Code</title>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/pdf-lib@1.4.0"></script>
+    <script src="https://unpkg.com/downloadjs@1.4.7"></script>
+    <script src="https://unpkg.com/@pdf-lib/fontkit@0.0.4"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            width: 900px;
+            margin: auto;
+        }
+        #qrcode {
+            display: none;
+        }
+        .form-control {
+            padding: 10px;
+            width: 80%;
+        }
+        .list-group-item {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 align="center">Verify Identity & Certificate</h2>
+        <h3 align="center">Youth Research Journal</h3>
+        <center><button><a href="https://yrjournal.org">Home</a></button></center>
+        <p align="center">Allow pop-up for this site to download Certificate.</p>
+        <p align="center">Use Google Chrome Browser for Better Download option.</p>
+        <div align="center">
+            <input type="text" name="search" id="search" placeholder="Search Student: Name, Verification Code" class="form-control" />
+        </div>
+        <ul class="list-group" id="result"></ul>
+        <p align="center">Developed by <a href="https://md-sanaul-haque-shanto.github.io">Md Sanaul Haque Shanto</a>.</p>
+        <p align="center" style="font-size: 10px;">Any Error, Suggestions, Design, Mail me at shanto@eptonline.org</p>
+    </div>
+
+    <div id="qrcode"></div>
+
+    <!-- Import the required libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.16.0/pdf-lib.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@pdf-lib/fontkit@1.1.1/dist/fontkit.umd.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $.ajaxSetup({ cache: false });
+            $('#search').keyup(function () {
+                $('#result').html('');
+                var searchField = $('#search').val();
+                var expression = new RegExp(searchField, "i");
+                $.getJSON('participant.json', function (data) {
+                    $.each(data, function (key, value) {
+                        if (value.name.search(expression) != -1 || value.id.search(expression) != -1) {
+                            $('#result').append(`
+                                <li class="list-group-item link-class">
+                                    <img src="${value.image}" height="40" width="40" class="img-thumbnail" /> ${value.name} | 
+                                    <span class="text-muted">${value.location}</span> | <span class="text-muted">${value.program}</span>
+                                    <button onclick="generateCertificate('${value.id}', '${value.name}', '${value.program}', '${value.date}', '${value.to}')">Generate Certificate</button>
+                                </li>
+                            `);
+                        }
+                    });
+                });
+            });
+
+            $('#result').on('click', 'li', function () {
+                var click_text = $(this).text().split('|');
+                $('#search').val($.trim(click_text[0]));
+                $("#result").html('');
+            });
+        });
+
+        async function generateCertificate(studentId, studentName, program, date, to) {
+            // Load the PDF template
+            const pdfUrl = 'iarcocert.pdf';
+            const existingPdfBytes = await fetch(pdfUrl).then(res => res.arrayBuffer());
+            const pdfDoc = await PDFLib.PDFDocument.load(existingPdfBytes);
+
+            // Register fontkit for custom font embedding
+            pdfDoc.registerFontkit(fontkit);
+
+            // Embed the custom font
+            const fontBytes = await fetch("GreatVibes-Regular.ttf").then(res => res.arrayBuffer());
+            const customFont = await pdfDoc.embedFont(fontBytes);
+
+            const pages = pdfDoc.getPages();
+            const firstPage = pages[0];
+
+            // Add student details to the PDF
+            const fontSize = 30;
+            const studentNameWidth = customFont.widthOfTextAtSize(studentName, fontSize);
+            firstPage.drawText(studentName, {
+                x: firstPage.getWidth() / 2 - studentNameWidth / 2,
+                y: firstPage.getHeight() / 1.5,
+                size: fontSize,
+                font: customFont,
+            });
+            firstPage.drawText(program, { x: 410, y: 342, size: 15 });
+            firstPage.drawText(`${date} to ${to}`, { x: 320, y: 300, size: 14 });
+            firstPage.drawText(studentId, { x: 720, y: 420, size: 12 });
+
+            // Generate QR code
+            const qrData = `Name: ${studentName}, ID: ${studentId}, Program: ${program}`;
+            generateQRCode(qrData, async function (qrDataUrl) {
+                const qrImageBytes = await fetch(qrDataUrl).then(res => res.arrayBuffer());
+                const qrImage = await pdfDoc.embedPng(qrImageBytes);
+                const qrSize = 60;
+                firstPage.drawImage(qrImage, {
+                    x: 700,
+                    y: 400,
+                    width: qrSize,
+                    height: qrSize
+                });
+
+
+                
+      // Set all available metadata fields on the PDFDocument. Note that these fields
+        // are visible in the "Document Properties" section of most PDF readers.
+        pdfDoc.setTitle(`Certificate | ${studentName} | ${program}`);
+        pdfDoc.setAuthor('Md Sanaul Haque Shanto');
+        pdfDoc.setSubject(`IARCO Participation Certificate`);
+        pdfDoc.setKeywords(['IARCO', 'International', 'Academic', 'Research', 'Competition', 'school', 'university']);
+        pdfDoc.setProducer('Md Sanaul Haque Shanto');
+        pdfDoc.setCreator('International Academic Research Competition (https://cert.iarco.org)');
+        pdfDoc.setCreationDate(new Date());
+        pdfDoc.setModificationDate(new Date());
+
+                const pdfBytes = await pdfDoc.save();
+                downloadPDF(pdfBytes, `${studentId}_${studentName}_certificate.pdf`);
+            });
+        }
+
+        function generateQRCode(text, callback) {
+            const qrElement = document.getElementById('qrcode');
+            qrElement.innerHTML = '';
+            new QRCode(qrElement, {
+                text: text,
+                width: 50,
+                height: 50,
+                correctLevel: QRCode.CorrectLevel.H
+            });
+            setTimeout(() => {
+                const qrCanvas = qrElement.querySelector('canvas');
+                const qrDataUrl = qrCanvas.toDataURL('image/png');
+                callback(qrDataUrl);
+            }, 500); // Delay to ensure QR code is rendered
+        }
+
+        function downloadPDF(pdfBytes, filename) {
+            const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+            const link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = filename;
+            link.click();
+        }
+    </script>
+</body>
+</html>
