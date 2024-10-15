@@ -143,7 +143,16 @@
                 });
 
 
-                
+                // Set all available metadata fields on the PDFDocument. Note that these fields
+        // are visible in the "Document Properties" section of most PDF readers.
+        pdfDoc.setTitle(`Certificate | ${studentName} | ${program}`);
+        pdfDoc.setAuthor('Md Sanaul Haque Shanto');
+        pdfDoc.setSubject(`IARCO Participation Certificate`);
+        pdfDoc.setKeywords(['IARCO', 'competition', 'university', 'year', 'research', 'school', 'program']);
+        pdfDoc.setProducer('Md Sanaul Haque Shanto');
+        pdfDoc.setCreator('IARCO (https://cert.iarco.org)');
+        pdfDoc.setCreationDate(20-10-2024);
+        pdfDoc.setModificationDate(new Date());
 
                 const pdfBytes = await pdfDoc.save();
                 downloadPDF(pdfBytes, `${studentId}_${studentName}_certificate.pdf`);
