@@ -68,7 +68,7 @@
                             $('#result').append(`
                                 <li class="list-group-item link-class">
                                     <img src="${value.image}" height="40" width="40" class="img-thumbnail" /> ${value.name} | 
-                                    <span class="text-muted">${value.location}</span> | <span class="text-muted">${value.school}</span>
+                                    <span class="text-muted">${value.role}</span> | <span class="text-muted">${value.school}</span>
                                     <button onclick="generateCertificate('${value.id}', '${value.name}', '${value.school}', '${value.role}', '${value.date}')">Generate Certificate</button>
                                 </li>
                             `);
@@ -117,8 +117,8 @@
     const textHeight = GreatVibes.heightAtSize(fsN);
             
             firstPage.drawText(`${studentName}`, {
-      x: firstPage.getWidth() / 1.6 - textWidth / 2,
-      y: firstPage.getHeight() / 1.3 - textHeight / 2,
+      x: firstPage.getWidth() / 2 - textWidth / 2,
+      y: firstPage.getHeight() / 1.5 - textHeight / 2,
       size: fsN,
       font: GreatVibes,
     });
@@ -133,8 +133,8 @@
             
             firstPage.drawText(studentId, { x: 700, y: 500, size: 9 });
 
-            firstPage.drawText(role, { x: 430, y: 280, size: 14 });
-            firstPage.drawText(`${date}`, { x: 490, y: 260, size: 14 });
+            firstPage.drawText(role, { x: 450, y: 280, size: 14 });
+            firstPage.drawText(`${date}`, { x: 550, y: 255, size: 14 });
             
 
             // Generate QR code
