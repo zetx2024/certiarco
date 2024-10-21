@@ -111,7 +111,7 @@
             // Add student details to the PDF
             const fontSize = 30;
              const fsN = 35;
-      const fsP = 16;
+      const fsP = 15;
       const fsR = 14;
       const fsD = 14;
       const fsId = 12;
@@ -122,11 +122,11 @@
             
             firstPage.drawText(`${studentName}`, {
       x: firstPage.getWidth() / 2 - textWidthN / 2,
-      y: firstPage.getHeight() / 1.6 - textHeightN / 2,
+      y: firstPage.getHeight() / 1.5 - textHeightN / 2,
       size: fsN,
       font: GreatVibes,
     });
-            const textWidthS = GreatVibes.widthOfTextAtSize(`${school}`, fsP);
+            const textWidthS = PtSans.widthOfTextAtSize(`${school}`, fsP);
             const textHeightS = PtSans.heightAtSize(fsP);
             firstPage.drawText(`${school}`, {
       x: firstPage.getWidth() / 2 - textWidthS / 2,
@@ -139,7 +139,7 @@
             firstPage.drawText(studentId, { x: 700, y: 500, size: 9 });
 
             firstPage.drawText(role, { x: 465, y: 280, size: 14 });
-            firstPage.drawText(`${date}`, { x: 573, y: 257, size: 14 });
+            firstPage.drawText(`${date}`, { x: 578, y: 257, size: 14 });
             
 
             // Generate QR code
