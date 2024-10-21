@@ -68,8 +68,8 @@
                             $('#result').append(`
                                 <li class="list-group-item link-class">
                                     <img src="${value.image}" height="40" width="40" class="img-thumbnail" /> ${value.name} | 
-                                    <span class="text-muted">${value.location}</span> | <span class="text-muted">${value.program}</span>
-                                    <button onclick="generateCertificate('${value.id}', '${value.name}', '${value.program}', '${value.date}', '${value.to}')">Generate Certificate</button>
+                                    <span class="text-muted">${value.location}</span> | <span class="text-muted">${value.school}</span>
+                                    <button onclick="generateCertificate('${value.id}', '${value.name}', '${value.school}', '${value.role}', '${value.date}')">Generate Certificate</button>
                                 </li>
                             `);
                         }
@@ -84,7 +84,7 @@
             });
         });
 
-        async function generateCertificate(studentId, studentName, program, date, to) {
+        async function generateCertificate(studentId, studentName, school, role, date) {
             // Load the PDF template
             const pdfUrl = 'iarcocert.pdf';
             const existingPdfBytes = await fetch(pdfUrl).then(res => res.arrayBuffer());
@@ -111,8 +111,6 @@
       const fsR = 14;
       const fsD = 14;
       const fsId = 12;
-
-        const toto= " to ";
           
 
              const textWidth = GreatVibes.widthOfTextAtSize(`${studentName}`, fsN);
@@ -124,13 +122,14 @@
       size: fsN,
       font: GreatVibes,
     });
-            
-            firstPage.drawText(program, { x: 410, y: 342, size: 15 });
-            firstPage.drawText(`${date} to ${to}`, { x: 320, y: 300, size: 14 });
             firstPage.drawText(studentId, { x: 720, y: 500, size: 12 });
+            firstPage.drawText(school, { x: 410, y: 342, size: 15 });
+            firstPage.drawText(role, { x: 410, y: 342, size: 15 });
+            firstPage.drawText(`${date}`, { x: 320, y: 300, size: 14 });
+            
 
             // Generate QR code
-            const qrData = `ID: ${studentId}\nName: ${studentName}\nProgram: ${program}\nDate: ${date} to ${to}\nVerify at: https://cert.iarco.org`;
+            const qrData = `ID: ${studentId}\nName: ${studentName}\nInstitute: ${school}\nCategory: ${role}\nDate: ${date}\nVerify at: https://cert.iarco.org`;
             generateQRCode(qrData, async function (qrDataUrl) {
                 const qrImageBytes = await fetch(qrDataUrl).then(res => res.arrayBuffer());
                 const qrImage = await pdfDoc.embedPng(qrImageBytes);
@@ -145,17 +144,17 @@
 
                 // Set all available metadata fields on the PDFDocument. Note that these fields
         // are visible in the "Document Properties" section of most PDF readers.
-        pdfDoc.setTitle(`Certificate | ${studentName} | ${program}`);
+        pdfDoc.setTitle(`Certificate | ${studentName} | ${school}`);
         pdfDoc.setAuthor('Md Sanaul Haque Shanto');
         pdfDoc.setSubject(`IARCO Participation Certificate`);
         pdfDoc.setKeywords(['IARCO', 'competition', 'university', 'year', 'research', 'school', 'program']);
         pdfDoc.setProducer('Md Sanaul Haque Shanto');
         pdfDoc.setCreator('IARCO (https://cert.iarco.org)');
-        pdfDoc.setCreationDate(new Date('2019/12/01'));
+        pdfDoc.setCreationDate(new Date('2024/11/10'));
         pdfDoc.setModificationDate(new Date());
 
                 const pdfBytes = await pdfDoc.save();
-                downloadPDF(pdfBytes, `${studentId}_${studentName}_certificate.pdf`);
+                downloadPDF(pdfBytes, `${studentId}_${studentName}_IARCO_certificate.pdf`);
             });
         }
 
