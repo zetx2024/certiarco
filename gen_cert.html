@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Excel to JSON Converter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    input[type="file"] {
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .json-output {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #333;
+      color: white;
+      white-space: pre-wrap;
+      border-radius: 5px;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    .copy-btn {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .copy-btn:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Excel to JSON Converter</h2>
+    <input type="file" id="fileInput" accept=".xlsx,.xls"/>
+    <button onclick="processFile()">Generate JSON</button>
+
+    <div id="jsonOutput" class="json-output"></div>
+    <button id="copyButton" class="copy-btn" style="display: none;" onclick="copyToClipboard()">Copy JSON to Clipboard</button>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
+  <script>
+    function processFile() {
+      const file = document.getElementById("fileInput").files[0];
+      if (!file) {
+        alert("Please select an Excel file.");
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const data = e.target.result;
+        const workbook = XLSX.read(data, { type: "binary" });
+
+        // Extract the first sheet from the workbook
+        const sheetName = workbook.SheetNames[0];
+        const sheet = workbook.Sheets[sheetName];
+
+        // Convert sheet to JSON array
+        const jsonData = XLSX.utils.sheet_to_json(sheet);
+
+        // Generate JSON for each row and display it
+        const result = jsonData.map(row => {
+          return {
+            id: generateRandomId(),
+            name: row.name, // Assuming the name column is 'name'
+            school: row.school, // Assuming the school column is 'school'
+            program: "IARCO 2024",
+            batch: "1st",
+            image: "https://iarco.org/fevicon/android-chrome-192x192.png",
+            role: row.role, // Dynamically set the role, default to "Junior" if undefined
+            date: "November 20, 2024",
+            years: "2024"
+          };
+        });
+
+        // Display the result in the JSON output div
+        const jsonString = JSON.stringify(result, null, 2);
+        document.getElementById("jsonOutput").textContent = jsonString;
+
+        // Show the "Copy to Clipboard" button
+        document.getElementById("copyButton").style.display = "block";
+      };
+
+      reader.readAsBinaryString(file);
+    }
+
+    // Function to generate a random alphanumeric ID
+    function generateRandomId() {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      let id = '';
+      for (let i = 0; i < 10; i++) {
+        id += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return id;
+    }
+
+    // Function to copy the JSON data to clipboard
+    function copyToClipboard() {
+      const jsonText = document.getElementById("jsonOutput").textContent;
+      navigator.clipboard.writeText(jsonText).then(() => {
+        alert("JSON copied to clipboard!");
+      }).catch(err => {
+        alert("Failed to copy JSON: " + err);
+      });
+    }
+  </script>
+
+</body>
+</html>
