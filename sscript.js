@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 "name": "John Doe",
                 "institution": "XYZ University",
                 "category": "Senior",
+                "year": "2024",
                 "research_proposal_title": "AI for Medical Diagnostics",
                 "research_paper": {
                     "research_problem": 85,
@@ -29,6 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 "name": "Jane Smith",
                 "institution": "ABC College",
                 "category": "Junior",
+                "year": "2024",
                 "research_proposal_title": "Quantum Computing and Cryptography",
                 "research_paper": {
                     "research_problem": 88,
@@ -65,12 +67,12 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Function to generate scorecard
+    // Function to generate scorecard on the page
     function generateScorecard(student) {
         const container = document.getElementById("student-details");
         container.innerHTML = '';  // Clear previous content
 
-        const { name, student_id, institution, category, research_proposal_title, research_paper } = student;
+        const { name, student_id, institution, category, year, research_proposal_title, research_paper } = student;
         const paperScores = research_paper;
         const presentationScores = paperScores.presentation;
 
@@ -102,6 +104,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         scorecard.innerHTML = `
             <h2>Scorecard for ${name}</h2>
+            <p><strong>Year:</strong> ${year}</p>
             <p><strong>Student ID:</strong> ${student_id}</p>
             <p><strong>Institution:</strong> ${institution}</p>
             <p><strong>Category:</strong> ${category}</p>
@@ -209,13 +212,77 @@ document.addEventListener("DOMContentLoaded", function () {
 
             <h3>Total Score: ${finalTotalScore.toFixed(2)} / 250</h3>
             <h3>Scaled Score: ${scaledFinalScore.toFixed(2)} / 100</h3>
+
+            <button id="download-pdf">Download Scorecard</button>
         `;
 
         container.appendChild(scorecard);
+
+        // Event listener to download the scorecard as a PDF
+        document.getElementById("download-pdf").addEventListener("click", function () {
+            downloadPDF(student, finalTotalScore, scaledFinalScore);
+        });
     }
 
     // Function to calculate the weighted score
     function calculateWeightedScore(score, weight) {
         return (score * weight) / 100;
+    }
+
+    // Function to download PDF with design
+    function downloadPDF(student, finalTotalScore, scaledFinalScore) {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        // Add the logo (replace with your logo file path)
+        doc.addImage('logo.png', 'PNG', 10, 10, 50, 50);
+
+        // Set font and title
+        doc.setFont("Poppins", "normal");
+        doc.setFontSize(14);
+        doc.text(`Scorecard for ${student.name}`, 70, 20);
+        doc.text(`Student ID: ${student.student_id}`, 70, 30);
+        doc.text(`Institution: ${student.institution}`, 70, 40);
+        doc.text(`Category: ${student.category}`, 70, 50);
+        doc.text(`Year: ${student.year}`, 70, 60);
+        doc.text(`Research Proposal Title: ${student.research_proposal_title}`, 70, 70);
+
+        // Research Paper Scores
+        doc.text("Research Paper Evaluation", 70, 90);
+        addScoreTable(doc, 90, student.research_paper, finalTotalScore);
+
+        // Presentation Scores
+        doc.text("Presentation Evaluation", 70, 150);
+        addScoreTable(doc, 150, student.research_paper.presentation, finalTotalScore);
+
+        // Total and Scaled Score
+        doc.text(`Total Score: ${finalTotalScore.toFixed(2)} / 250`, 70, 230);
+        doc.text(`Scaled Score: ${scaledFinalScore.toFixed(2)} / 100`, 70, 240);
+
+        // Save PDF
+        doc.save(`${student.student_id}_scorecard.pdf`);
+    }
+
+    // Add a table of scores to PDF
+    function addScoreTable(doc, startY, scores, finalScore) {
+        const headers = ["Criteria", "Marks Obtained", "Weight", "Weighted Score"];
+        const rows = [
+            ["Research Problem", scores.research_problem, "20%", calculateWeightedScore(scores.research_problem, 20).toFixed(2)],
+            ["Existing Literature", scores.existing_literature, "10%", calculateWeightedScore(scores.existing_literature, 10).toFixed(2)],
+            ["Research Question", scores.research_question, "25%", calculateWeightedScore(scores.research_question, 25).toFixed(2)],
+            ["Methodology", scores.methodology, "25%", calculateWeightedScore(scores.methodology, 25).toFixed(2)],
+            ["Research Topic", scores.research_topic, "15%", calculateWeightedScore(scores.research_topic, 15).toFixed(2)],
+            ["Quality of Writing", scores.quality_of_writing, "5%", calculateWeightedScore(scores.quality_of_writing, 5).toFixed(2)],
+            ["Plagiarism Check", scores.plagiarism_check_percentile, "5%", calculateWeightedScore(scores.plagiarism_check_percentile, 5).toFixed(2)]
+        ];
+
+        doc.autoTable({
+            head: [headers],
+            body: rows,
+            startY: startY,
+            theme: 'grid',
+            margin: { top: 10 },
+            tableWidth: 'wrap',
+        });
     }
 });
