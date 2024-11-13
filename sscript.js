@@ -69,6 +69,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const paperScores = research_paper;
         const presentationScores = paperScores.presentation;
 
+        // Calculate final scores
         const totalScore = [
             { score: paperScores.research_problem, weight: 20 },
             { score: paperScores.existing_literature, weight: 10 },
@@ -208,7 +209,7 @@ document.addEventListener("DOMContentLoaded", function() {
         
         // Download PDF when button is clicked
         downloadButton.addEventListener("click", function() {
-            downloadPDF(student);
+            downloadPDF(student, finalTotalScore, scaledFinalScore);
         });
     }
 
@@ -225,7 +226,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     // Function to generate PDF with logo on the left side
-    function downloadPDF(student) {
+    function downloadPDF(student, finalTotalScore, scaledFinalScore) {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
         
