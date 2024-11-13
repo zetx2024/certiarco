@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 <thead>
                     <tr>
                         <th>Criteria</th>
-                        <th>Score</th>
+                        <th>Marks Obtained</th>
                         <th>Weight</th>
                         <th>Weighted Score</th>
                     </tr>
@@ -160,7 +160,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 <thead>
                     <tr>
                         <th>Criteria</th>
-                        <th>Score</th>
+                        <th>Marks Obtained</th>
                         <th>Weight</th>
                         <th>Weighted Score</th>
                     </tr>
@@ -234,6 +234,8 @@ document.addEventListener("DOMContentLoaded", function() {
         doc.addImage('logo.png', 'PNG', 10, 10, 50, 50); // Adjust the position and size of the logo
         
         // Add text to the PDF
+        doc.setFont("Roboto", "normal");
+        doc.setFontSize(12);
         doc.text(`Scorecard for ${student.name}`, 70, 20);
         doc.text(`Student ID: ${student.student_id}`, 70, 30);
         doc.text(`Institution: ${student.institution}`, 70, 40);
