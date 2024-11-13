@@ -213,6 +213,18 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+        // Search function for students
+    document.getElementById("search-btn").addEventListener("click", function() {
+        const searchTerm = document.getElementById("student-search").value.toLowerCase();
+        const student = studentsData.students.find(s => s.name.toLowerCase().includes(searchTerm) || s.student_id.toLowerCase().includes(searchTerm));
+        
+        if (student) {
+            generateScorecard(student);
+        } else {
+            alert("Student not found!");
+        }
+    });
+
     // Function to generate and download PDF with logo
     function downloadPDF(student, finalTotalScore, scaledFinalScore) {
         const { jsPDF } = window.jspdf;
