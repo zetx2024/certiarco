@@ -2,53 +2,245 @@ document.addEventListener("DOMContentLoaded", function () {
     const studentsData = {
         "students": [
             {
-                "student_id": "S001",
-                "name": "John Doe",
-                "institution": "XYZ University",
-                "category": "Senior",
-                "year": "2024",
-                "research_proposal_title": "AI for Medical Diagnostics",
-                "research_paper": {
-                    "research_problem": 85,
-                    "existing_literature": 90,
-                    "research_question": 80,
-                    "methodology": 95,
-                    "research_topic": 70,
-                    "quality_of_writing": 75,
-                    "plagiarism_check_percentile": 95,
-                    "presentation": {
-                        "persuasiveness": 80,
-                        "video_quality": 70,
-                        "research_problem": 85,
-                        "research_question": 90,
-                        "methodology": 75
-                    }
-                }
-            },
-            {
-                "student_id": "S002",
-                "name": "Jane Smith",
-                "institution": "ABC College",
-                "category": "Junior",
-                "year": "2024",
-                "research_proposal_title": "Quantum Computing and Cryptography",
-                "research_paper": {
-                    "research_problem": 88,
-                    "existing_literature": 85,
-                    "research_question": 90,
-                    "methodology": 93,
-                    "research_topic": 77,
-                    "quality_of_writing": 82,
-                    "plagiarism_check_percentile": 97,
-                    "presentation": {
-                        "persuasiveness": 85,
-                        "video_quality": 78,
-                        "research_problem": 88,
-                        "research_question": 91,
-                        "methodology": 80
-                    }
-                }
-            }
+    "student_id": "z822790z6A",
+    "name": "Afia Anjum Aboni",
+    "institution": "institution",
+    "category": "Junior",
+    "year": "1999",
+    "research_proposal_title": "The Relevance of Class Disparity in the Implementation of Climate-Related Policies; an Investigation into the Different Socioeconomic Classes of Dhaka",
+    "research_paper": {
+      "research_problem": 17,
+      "existing_literature": 7,
+      "research_question": 20,
+      "methodology": 18,
+      "research_topic": 12,
+      "quality_of_writing": 4,
+      "plagiarism_check_percentile": 0.03,
+      "presentation": {
+        "persuasiveness": 30,
+        "video_quality": 16,
+        "research_problem": 4.03,
+        "research_question": 30.03,
+        "methodology": 46
+      }
+    }
+  },
+  {
+    "student_id": "5Z92Z85473",
+    "name": "Adira Safwan",
+    "institution": "institution",
+    "category": "Junior",
+    "year": "1999",
+    "research_proposal_title": "Exploring Differences in Social Media Literacy Between Digital Natives and Digital Immigrants: A Comparative Analysis of Critical Skills and Digital Adaptability",
+    "research_paper": {
+      "research_problem": 14,
+      "existing_literature": 4,
+      "research_question": 17,
+      "methodology": 15,
+      "research_topic": 11,
+      "quality_of_writing": 2,
+      "plagiarism_check_percentile": 0.17,
+      "presentation": {
+        "persuasiveness": 26,
+        "video_quality": 13,
+        "research_problem": 2.17,
+        "research_question": 26.17,
+        "methodology": 39
+      }
+    }
+  },
+  {
+    "student_id": "z865aAzA3a",
+    "name": "Adnan Hussain Sajeeb",
+    "institution": "institution",
+    "category": "Junior",
+    "year": "1999",
+    "research_proposal_title": "Anti-Deepfake Biometrics:\r\nProtecting Identity in the Digital World",
+    "research_paper": {
+      "research_problem": 18,
+      "existing_literature": 8,
+      "research_question": 22,
+      "methodology": 19,
+      "research_topic": 14,
+      "quality_of_writing": 4,
+      "plagiarism_check_percentile": 0,
+      "presentation": {
+        "persuasiveness": 33,
+        "video_quality": 18,
+        "research_problem": 4,
+        "research_question": 33,
+        "methodology": 51
+      }
+    }
+  },
+  {
+    "student_id": "3270776100",
+    "name": "Andi Filzah Dahiyah Liana",
+    "institution": "institution",
+    "category": "Junior",
+    "year": "1999",
+    "research_proposal_title": "Effectiveness Test of Silica Gel from Rice Husk and \r\nCoffee Grounds as Adsorbent",
+    "research_paper": {
+      "research_problem": 15,
+      "existing_literature": 6,
+      "research_question": 17,
+      "methodology": 17,
+      "research_topic": 12,
+      "quality_of_writing": 3,
+      "plagiarism_check_percentile": 0.1,
+      "presentation": {
+        "persuasiveness": 29,
+        "video_quality": 15,
+        "research_problem": 3.1,
+        "research_question": 29.1,
+        "methodology": 44
+      }
+    }
+  },
+  {
+    "student_id": "72985AAa21",
+    "name": "Arnob Kumar Sarkar",
+    "institution": "institution",
+    "category": "Junior",
+    "year": "1999",
+    "research_proposal_title": "Evaluating and Implementing Integrated Waste Management Strategies in Mymensingh: A Pilot-Based Approach to Waste Segregation, Recycling, and Policy Optimization",
+    "research_paper": {
+      "research_problem": 17,
+      "existing_literature": 6,
+      "research_question": 20,
+      "methodology": 18,
+      "research_topic": 13,
+      "quality_of_writing": 3,
+      "plagiarism_check_percentile": 0.02,
+      "presentation": {
+        "persuasiveness": 31,
+        "video_quality": 16,
+        "research_problem": 3.02,
+        "research_question": 31.02,
+        "methodology": 47
+      }
+    }
+  },
+  {
+    "student_id": "2019936zZ3",
+    "name": "Ashura Tabassum Arshi",
+    "institution": "institution",
+    "category": "Junior",
+    "year": "1999",
+    "research_proposal_title": "Evaluating Combined Urban Heat Island Mitigation Strategies in Dhaka: A Mixed-Methods Approach to Address Existing Research Gaps and Enhance Community Sustainability.",
+    "research_paper": {
+      "research_problem": 18,
+      "existing_literature": 7,
+      "research_question": 21,
+      "methodology": 19,
+      "research_topic": 14,
+      "quality_of_writing": 4,
+      "plagiarism_check_percentile": 0.04,
+      "presentation": {
+        "persuasiveness": 33,
+        "video_quality": 18,
+        "research_problem": 4.04,
+        "research_question": 33.04,
+        "methodology": 51
+      }
+    }
+  },
+  {
+    "student_id": "z559776A40",
+    "name": "Nahian Adib Mahim",
+    "institution": "institution",
+    "category": "Junior",
+    "year": "1999",
+    "research_proposal_title": "Hypothesizing Dark Matter as Quantum States Encoded in Hidden Dimensions: A Quantum-Based Approach Towards Understanding Dark Matter and Its Properties",
+    "research_paper": {
+      "research_problem": 16,
+      "existing_literature": 6,
+      "research_question": 19,
+      "methodology": 18,
+      "research_topic": 14,
+      "quality_of_writing": 4,
+      "plagiarism_check_percentile": 0.05,
+      "presentation": {
+        "persuasiveness": 32,
+        "video_quality": 18,
+        "research_problem": 4.05,
+        "research_question": 32.05,
+        "methodology": 50
+      }
+    }
+  },
+  {
+    "student_id": "AA8z42A366",
+    "name": "Glory Jewel ",
+    "institution": "institution",
+    "category": "Junior",
+    "year": "1999",
+    "research_proposal_title": "A comprehensive study upon adolescence BMI and obesity rates.",
+    "research_paper": {
+      "research_problem": 15,
+      "existing_literature": 5,
+      "research_question": 18,
+      "methodology": 17,
+      "research_topic": 12,
+      "quality_of_writing": 2,
+      "plagiarism_check_percentile": 0.05,
+      "presentation": {
+        "persuasiveness": 29,
+        "video_quality": 14,
+        "research_problem": 2.05,
+        "research_question": 29.05,
+        "methodology": 43
+      }
+    }
+  },
+  {
+    "student_id": "92Z2A0z0a2",
+    "name": "Ha-mim Rahman",
+    "institution": "institution",
+    "category": "Junior",
+    "year": "1999",
+    "research_proposal_title": "Evaluating the Association Between Dietary Factors and Esophageal Cancer of Middle-Income Adults in Dhaka: A Case-Control Study Approach",
+    "research_paper": {
+      "research_problem": 17,
+      "existing_literature": 7,
+      "research_question": 20,
+      "methodology": 19,
+      "research_topic": 13,
+      "quality_of_writing": 4,
+      "plagiarism_check_percentile": 0.04,
+      "presentation": {
+        "persuasiveness": 32,
+        "video_quality": 17,
+        "research_problem": 4.04,
+        "research_question": 32.04,
+        "methodology": 49
+      }
+    }
+  },
+  {
+    "student_id": "917570z9zZ",
+    "name": "Xeon Nasif",
+    "institution": "institution",
+    "category": "Junior",
+    "year": "1999",
+    "research_proposal_title": "The Alteration of Lecture-Based Pedagogy Through Generative AI and a Proposed Ethical Framework for AI Detection Tools: A Mixed-Methods Study from the Perspectives of Students and Teachers in Secondary and Higher Secondary Education in Urban Bangladesh",
+    "research_paper": {
+      "research_problem": 18,
+      "existing_literature": 7,
+      "research_question": 21,
+      "methodology": 19,
+      "research_topic": 13,
+      "quality_of_writing": 4,
+      "plagiarism_check_percentile": 0.03,
+      "presentation": {
+        "persuasiveness": 32,
+        "video_quality": 17,
+        "research_problem": 4.03,
+        "research_question": 32.03,
+        "methodology": 49
+      }
+    }
+  }
         ]
     };
 
