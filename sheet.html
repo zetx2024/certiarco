@@ -258,14 +258,86 @@
                             <td>${research_proposal_title}</td>
                         </tr>
                     </table>
-                    
+
                     <div class="score-section">
                         <h3>Research Paper Score: ${researchPaperScore}</h3>
+                        <table>
+                            <tr>
+                                <th>Criteria</th>
+                                <th>Marks Distribution</th>
+                                <th>Marks Obtained</th>
+                            </tr>
+                            <tr>
+                                <td>Research Problem</td>
+                                <td>17</td>
+                                <td>${paperScores.research_problem}</td>
+                            </tr>
+                            <tr>
+                                <td>Existing Literature</td>
+                                <td>7</td>
+                                <td>${paperScores.existing_literature}</td>
+                            </tr>
+                            <tr>
+                                <td>Research Question</td>
+                                <td>20</td>
+                                <td>${paperScores.research_question}</td>
+                            </tr>
+                            <tr>
+                                <td>Methodology</td>
+                                <td>18</td>
+                                <td>${paperScores.methodology}</td>
+                            </tr>
+                            <tr>
+                                <td>Research Topic</td>
+                                <td>12</td>
+                                <td>${paperScores.research_topic}</td>
+                            </tr>
+                            <tr>
+                                <td>Quality of Writing</td>
+                                <td>4</td>
+                                <td>${paperScores.quality_of_writing}</td>
+                            </tr>
+                        </table>
+
                         <h3>Presentation Score: ${presentationScore}</h3>
-                        <h3>Plagiarism Adjusted Score: ${plagiarismAdjustedScore}</h3>
+                        <table>
+                            <tr>
+                                <th>Criteria</th>
+                                <th>Marks Distribution</th>
+                                <th>Marks Obtained</th>
+                            </tr>
+                            <tr>
+                                <td>Persuasiveness</td>
+                                <td>12</td>
+                                <td>${presentationScores.persuasiveness}</td>
+                            </tr>
+                            <tr>
+                                <td>Video Quality</td>
+                                <td>16</td>
+                                <td>${presentationScores.video_quality}</td>
+                            </tr>
+                            <tr>
+                                <td>Research Problem</td>
+                                <td>4</td>
+                                <td>${presentationScores.research_problem}</td>
+                            </tr>
+                            <tr>
+                                <td>Research Question</td>
+                                <td>10</td>
+                                <td>${presentationScores.research_question}</td>
+                            </tr>
+                            <tr>
+                                <td>Methodology</td>
+                                <td>12</td>
+                                <td>${presentationScores.methodology}</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="score-section">
                         <h3>Final Score: ${finalScore}</h3>
                     </div>
-                    
+
                     <div class="comment-section">
                         <h3>Proposal Comment:</h3>
                         <p>${proposal_comment}</p>
@@ -282,7 +354,7 @@
 
             // Function to adjust research paper score based on plagiarism percentile
             function adjustPlagiarismScore(plagiarismPercentile, researchScore) {
-                const plagiarismPenalty = (plagiarismPercentile / 100) * 100;  // Penalized amount based on plagiarism percentage
+                const plagiarismPenalty = (plagiarismPercentile / 100) * 100;
                 return researchScore - plagiarismPenalty;
             }
         });
