@@ -3,31 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Report Card</title>
+    <title>Student Marksheet</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            padding: 20px;
+            background-color: #f4f7fc;
             margin: 0;
+            padding: 20px;
         }
 
-        h1, h2 {
+        h1 {
             text-align: center;
+            color: #333;
+            font-size: 32px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 24px;
+            margin-bottom: 20px;
             color: #333;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
         }
 
         th, td {
             padding: 12px;
-            text-align: left;
+            text-align: center;
             border: 1px solid #ddd;
+            font-size: 16px;
         }
 
         th {
@@ -36,21 +52,21 @@
         }
 
         tr:nth-child(even) {
-            background-color: #f2f2f2;
+            background-color: #f9f9f9;
         }
 
         tr:hover {
-            background-color: #ddd;
+            background-color: #f1f1f1;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
+        .score-info {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
         }
 
-        #search-container {
-            text-align: center;
-            margin-bottom: 20px;
+        .score-info div {
+            width: 48%;
         }
 
         .btn {
@@ -61,19 +77,11 @@
             cursor: pointer;
             border-radius: 5px;
             font-size: 16px;
+            margin: 20px 0;
         }
 
         .btn:hover {
             background-color: #45a049;
-        }
-
-        .score-section {
-            margin-top: 20px;
-        }
-
-        .score-section h3 {
-            font-size: 20px;
-            margin-bottom: 10px;
         }
 
         .comment-section {
@@ -82,6 +90,8 @@
 
         .comment-section h3 {
             font-size: 20px;
+            margin-bottom: 10px;
+            color: #333;
         }
 
         .comment-section p {
@@ -89,14 +99,22 @@
             color: #555;
         }
 
-        /* Responsive Design */
         @media screen and (max-width: 768px) {
             table {
                 font-size: 14px;
             }
 
             th, td {
-                padding: 8px;
+                padding: 10px;
+            }
+
+            .score-info {
+                flex-direction: column;
+            }
+
+            .score-info div {
+                width: 100%;
+                margin-bottom: 15px;
             }
         }
     </style>
@@ -104,7 +122,9 @@
 <body>
 
     <div class="container">
-        <div id="search-container">
+        <h1>Student Marksheet</h1>
+
+        <div id="search-container" style="text-align: center; margin-bottom: 20px;">
             <label for="student-search">Enter Student Name or ID: </label>
             <input type="text" id="student-search" placeholder="Search student">
             <button class="btn" id="search-btn">Search</button>
@@ -123,7 +143,7 @@
                         "institution": "institution",
                         "category": "Junior",
                         "year": "1999",
-                        "research_proposal_title": "The Relevance of Class Disparity in the Implementation of Climate-Related Policies; an Investigation into the Different Socioeconomic Classes of Dhaka",
+                        "research_proposal_title": "The Relevance of Class Disparity in the Implementation of Climate-Related Policies",
                         "research_paper": {
                             "research_problem": 17,
                             "existing_literature": 7,
@@ -175,7 +195,7 @@
                         "institution": "institution",
                         "category": "Junior",
                         "year": "1999",
-                        "research_proposal_title": "The Alteration of Lecture-Based Pedagogy Through Generative AI and a Proposed Ethical Framework for AI Detection Tools: A Mixed-Methods Study from the Perspectives of Students and Teachers in Secondary and Higher Secondary Education in Urban Bangladesh",
+                        "research_proposal_title": "The Alteration of Lecture-Based Pedagogy Through Generative AI",
                         "research_paper": {
                             "research_problem": 18,
                             "existing_literature": 7,
@@ -239,7 +259,7 @@
 
                 // Add content to the page
                 container.innerHTML = `
-                    <h1>Student Scorecard</h1>
+                    <h1>Student Marksheet</h1>
                     <p><strong>Name:</strong> ${name}</p>
                     <p><strong>Student ID:</strong> ${student_id}</p>
                     <p><strong>Institution:</strong> ${institution}</p>
@@ -247,90 +267,43 @@
                     <p><strong>Year:</strong> ${year}</p>
                     <p><strong>Research Proposal Title:</strong> ${research_proposal_title}</p>
 
-                    <div class="score-section">
-                        <h3>Research Paper Score: ${researchPaperScore}</h3>
-                        <table>
-                            <tr>
-                                <th>Criteria</th>
-                                <th>Full Marks</th>
-                                <th>Marks Obtained</th>
-                            </tr>
-                            <tr>
-                                <td>Research Problem</td>
-                                <td>20</td>
-                                <td>${paperScores.research_problem}</td>
-                            </tr>
-                            <tr>
-                                <td>Existing Literature</td>
-                                <td>10</td>
-                                <td>${paperScores.existing_literature}</td>
-                            </tr>
-                            <tr>
-                                <td>Research Question</td>
-                                <td>25</td>
-                                <td>${paperScores.research_question}</td>
-                            </tr>
-                            <tr>
-                                <td>Methodology</td>
-                                <td>25</td>
-                                <td>${paperScores.methodology}</td>
-                            </tr>
-                            <tr>
-                                <td>Research Topic</td>
-                                <td>15</td>
-                                <td>${paperScores.research_topic}</td>
-                            </tr>
-                            <tr>
-                                <td>Quality of Writing</td>
-                                <td>5</td>
-                                <td>${paperScores.quality_of_writing}</td>
-                            </tr>
-                        </table>
+                    <div class="score-info">
+                        <div>
+                            <h3>Research Paper Score: ${researchPaperScore}</h3>
+                            <table>
+                                <tr><th>Criteria</th><th>Full Marks</th><th>Marks Obtained</th></tr>
+                                <tr><td>Research Problem</td><td>20</td><td>${paperScores.research_problem}</td></tr>
+                                <tr><td>Existing Literature</td><td>10</td><td>${paperScores.existing_literature}</td></tr>
+                                <tr><td>Research Question</td><td>25</td><td>${paperScores.research_question}</td></tr>
+                                <tr><td>Methodology</td><td>25</td><td>${paperScores.methodology}</td></tr>
+                                <tr><td>Research Topic</td><td>15</td><td>${paperScores.research_topic}</td></tr>
+                                <tr><td>Quality of Writing</td><td>5</td><td>${paperScores.quality_of_writing}</td></tr>
+                            </table>
+                        </div>
+                        <div>
+                            <h3>Presentation Score: ${presentationScore}</h3>
+                            <table>
+                                <tr><th>Criteria</th><th>Full Marks</th><th>Marks Obtained</th></tr>
+                                <tr><td>Persuasiveness</td><td>20</td><td>${presentationScores.persuasiveness}</td></tr>
+                                <tr><td>Video Quality</td><td>20</td><td>${presentationScores.video_quality}</td></tr>
+                                <tr><td>Research Problem</td><td>20</td><td>${presentationScores.research_problem}</td></tr>
+                                <tr><td>Research Question</td><td>20</td><td>${presentationScores.research_question}</td></tr>
+                                <tr><td>Methodology</td><td>20</td><td>${presentationScores.methodology}</td></tr>
+                            </table>
+                        </div>
                     </div>
 
-                    <div class="score-section">
-                        <h3>Presentation Score: ${presentationScore}</h3>
-                        <table>
-                            <tr>
-                                <th>Criteria</th>
-                                <th>Full Marks</th>
-                                <th>Marks Obtained</th>
-                            </tr>
-                            <tr>
-                                <td>Persuasiveness</td>
-                                <td>20</td>
-                                <td>${presentationScores.persuasiveness}</td>
-                            </tr>
-                            <tr>
-                                <td>Video Quality</td>
-                                <td>20</td>
-                                <td>${presentationScores.video_quality}</td>
-                            </tr>
-                            <tr>
-                                <td>Research Problem</td>
-                                <td>20</td>
-                                <td>${presentationScores.research_problem}</td>
-                            </tr>
-                            <tr>
-                                <td>Research Question</td>
-                                <td>20</td>
-                                <td>${presentationScores.research_question}</td>
-                            </tr>
-                            <tr>
-                                <td>Methodology</td>
-                                <td>20</td>
-                                <td>${presentationScores.methodology}</td>
-                            </tr>
-                        </table>
-                    </div>
-
-                    <div class="score-section">
-                        <h3>Plagiarism Penalty: ${plagiarismPenalty}</h3>
-                        <p>Plagiarism Adjusted Score: ${plagiarismAdjustedScore}</p>
-                    </div>
-
-                    <div class="score-section">
-                        <h3>Final Score: ${finalScore}</h3>
+                    <div class="score-info">
+                        <div>
+                            <h3>Plagiarism Check</h3>
+                            <p><strong>Plagiarism Percentile:</strong> ${paperScores.plagiarism_check_percentile}</p>
+                            <p><strong>Plagiarism Penalty:</strong> ${plagiarismPenalty}</p>
+                            <p><strong>Plagiarism Adjusted Score:</strong> ${plagiarismAdjustedScore}</p>
+                        </div>
+                        <div>
+                            <h3>Final Score</h3>
+                            <p><strong>Final Score:</strong> ${finalScore}</p>
+                        </div>
                     </div>
 
                     <div class="comment-section">
