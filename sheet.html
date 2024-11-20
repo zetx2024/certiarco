@@ -264,7 +264,7 @@
                         <table>
                             <tr>
                                 <th>Criteria</th>
-                                <th>Marks Distribution</th>
+                                <th>Full Marks</th>
                                 <th>Marks Obtained</th>
                             </tr>
                             <tr>
@@ -298,12 +298,14 @@
                                 <td>${paperScores.quality_of_writing}</td>
                             </tr>
                         </table>
+                    </div>
 
+                    <div class="score-section">
                         <h3>Presentation Score: ${presentationScore}</h3>
                         <table>
                             <tr>
                                 <th>Criteria</th>
-                                <th>Marks Distribution</th>
+                                <th>Full Marks</th>
                                 <th>Marks Obtained</th>
                             </tr>
                             <tr>
@@ -332,6 +334,11 @@
                                 <td>${presentationScores.methodology}</td>
                             </tr>
                         </table>
+                    </div>
+
+                    <div class="score-section">
+                        <h3>Plagiarism Penalty: ${paperScores.plagiarism_check_percentile}%</h3>
+                        <p>Plagiarism Adjusted Research Paper Score: ${plagiarismAdjustedScore}</p>
                     </div>
 
                     <div class="score-section">
