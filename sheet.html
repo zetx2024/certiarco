@@ -342,14 +342,14 @@
             function calculatePlagiarismPenalty(plagiarismPercentile) {
                 let penalty = 0;
 
-                if (plagiarismPercentile >= 0 && plagiarismPercentile <= 4) {
+                if (plagiarismPercentile >= 0 && plagiarismPercentile <= 5) {
                     penalty = 15; // High penalty
-                } else if (plagiarismPercentile >= 5 && plagiarismPercentile <= 20) {
+                } else if (plagiarismPercentile >= 6 && plagiarismPercentile <= 20) {
                     penalty = 0;  // No penalty
                 } else if (plagiarismPercentile >= 21 && plagiarismPercentile <= 30) {
-                    penalty = 15; // Moderate penalty
+                    penalty = 20; // Moderate penalty
                 } else if (plagiarismPercentile > 30) {
-                    penalty = 25; // High penalty
+                    penalty = 30; // High penalty
                 }
 
                 return penalty;
