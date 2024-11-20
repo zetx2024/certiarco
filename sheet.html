@@ -307,13 +307,13 @@
                     <div class="score-info">
                         <div>
                             <h3>Plagiarism Check</h3>
-                            <p><strong>Plagiarism Percentile:</strong> ${paperScores.plagiarism_check_percentile}</p>
+                            <p><strong>Plagiarism Percentile:</strong> ${paperScores.plagiarism_check_percentile}%</p>
                             <p><strong>Plagiarism Penalty:</strong> ${plagiarismPenalty}</p>
-                            <p><strong>Plagiarism Adjusted Score:</strong> ${plagiarismAdjustedScore}</p>
+                            <p><strong>Plagiarism Adjusted Score:</strong> ${submissionScore} - ${plagiarismPenalty} = ${plagiarismAdjustedScore} </p>
                         </div>
                         <div>
                             <h3>Submission Score (Research + Presentation)</h3>
-                            <p><strong>Submission Score:</strong> ${submissionScore}</p>
+                            <p><strong>Submission Score:</strong> ${researchPaperScore} + ${presentationScore} = ${submissionScore}/200</p>
                         </div>
                     </div>
 
