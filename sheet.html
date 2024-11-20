@@ -131,7 +131,7 @@
                             "methodology": 18,
                             "research_topic": 12,
                             "quality_of_writing": 4,
-                            "plagiarism_check_percentile": 3,
+                            "plagiarism_check_percentile": 5,
                             "presentation": {
                                 "persuasiveness": 12,
                                 "video_quality": 16,
@@ -157,7 +157,7 @@
                             "methodology": 19,
                             "research_topic": 14,
                             "quality_of_writing": 4,
-                            "plagiarism_check_percentile": 0,
+                            "plagiarism_check_percentile": 3,
                             "presentation": {
                                 "persuasiveness": 13,
                                 "video_quality": 5,
@@ -222,42 +222,30 @@
                 const paperScores = research_paper;
                 const presentationScores = paperScores.presentation;
 
-                // Calculate final research paper score
+                // Calculate total Research Paper score
                 const researchPaperScore = calculateScore(paperScores.research_problem, paperScores.existing_literature, paperScores.research_question, paperScores.methodology, paperScores.research_topic, paperScores.quality_of_writing);
 
-                // Calculate presentation score
+                // Calculate total Presentation score
                 const presentationScore = calculateScore(presentationScores.persuasiveness, presentationScores.video_quality, presentationScores.research_problem, presentationScores.research_question, presentationScores.methodology);
 
-                // Adjust research paper score based on plagiarism percentile
-                const plagiarismAdjustedScore = adjustPlagiarismScore(paperScores.plagiarism_check_percentile, researchPaperScore);
+                // Apply plagiarism penalty
+                const plagiarismPenalty = calculatePlagiarismPenalty(paperScores.plagiarism_check_percentile);
 
-                // Calculate the final overall score
-                const finalScore = Math.floor(researchPaperScore + presentationScore - plagiarismAdjustedScore);
+                // Final score after penalty
+                const finalScore = Math.floor(researchPaperScore + presentationScore - plagiarismPenalty);
 
+                // Plagiarism adjusted score
+                const plagiarismAdjustedScore = researchPaperScore + presentationScore - plagiarismPenalty;
+
+                // Add content to the page
                 container.innerHTML = `
-                    <h2>Student Report Card: ${name}</h2>
-                    <table>
-                        <tr>
-                            <th>Student ID</th>
-                            <td>${student_id}</td>
-                        </tr>
-                        <tr>
-                            <th>Institution</th>
-                            <td>${institution}</td>
-                        </tr>
-                        <tr>
-                            <th>Category</th>
-                            <td>${category}</td>
-                        </tr>
-                        <tr>
-                            <th>Year</th>
-                            <td>${year}</td>
-                        </tr>
-                        <tr>
-                            <th>Research Proposal Title</th>
-                            <td>${research_proposal_title}</td>
-                        </tr>
-                    </table>
+                    <h1>Student Scorecard</h1>
+                    <p><strong>Name:</strong> ${name}</p>
+                    <p><strong>Student ID:</strong> ${student_id}</p>
+                    <p><strong>Institution:</strong> ${institution}</p>
+                    <p><strong>Category:</strong> ${category}</p>
+                    <p><strong>Year:</strong> ${year}</p>
+                    <p><strong>Research Proposal Title:</strong> ${research_proposal_title}</p>
 
                     <div class="score-section">
                         <h3>Research Paper Score: ${researchPaperScore}</h3>
@@ -269,32 +257,32 @@
                             </tr>
                             <tr>
                                 <td>Research Problem</td>
-                                <td>17</td>
+                                <td>20</td>
                                 <td>${paperScores.research_problem}</td>
                             </tr>
                             <tr>
                                 <td>Existing Literature</td>
-                                <td>7</td>
+                                <td>10</td>
                                 <td>${paperScores.existing_literature}</td>
                             </tr>
                             <tr>
                                 <td>Research Question</td>
-                                <td>20</td>
+                                <td>25</td>
                                 <td>${paperScores.research_question}</td>
                             </tr>
                             <tr>
                                 <td>Methodology</td>
-                                <td>18</td>
+                                <td>25</td>
                                 <td>${paperScores.methodology}</td>
                             </tr>
                             <tr>
                                 <td>Research Topic</td>
-                                <td>12</td>
+                                <td>15</td>
                                 <td>${paperScores.research_topic}</td>
                             </tr>
                             <tr>
                                 <td>Quality of Writing</td>
-                                <td>4</td>
+                                <td>5</td>
                                 <td>${paperScores.quality_of_writing}</td>
                             </tr>
                         </table>
@@ -310,35 +298,35 @@
                             </tr>
                             <tr>
                                 <td>Persuasiveness</td>
-                                <td>12</td>
+                                <td>20</td>
                                 <td>${presentationScores.persuasiveness}</td>
                             </tr>
                             <tr>
                                 <td>Video Quality</td>
-                                <td>16</td>
+                                <td>20</td>
                                 <td>${presentationScores.video_quality}</td>
                             </tr>
                             <tr>
                                 <td>Research Problem</td>
-                                <td>4</td>
+                                <td>20</td>
                                 <td>${presentationScores.research_problem}</td>
                             </tr>
                             <tr>
                                 <td>Research Question</td>
-                                <td>10</td>
+                                <td>20</td>
                                 <td>${presentationScores.research_question}</td>
                             </tr>
                             <tr>
                                 <td>Methodology</td>
-                                <td>12</td>
+                                <td>20</td>
                                 <td>${presentationScores.methodology}</td>
                             </tr>
                         </table>
                     </div>
 
                     <div class="score-section">
-                        <h3>Plagiarism Penalty: ${paperScores.plagiarism_check_percentile}%</h3>
-                        <p>Plagiarism Adjusted Research Paper Score: ${plagiarismAdjustedScore}</p>
+                        <h3>Plagiarism Penalty: ${plagiarismPenalty}</h3>
+                        <p>Plagiarism Adjusted Score: ${plagiarismAdjustedScore}</p>
                     </div>
 
                     <div class="score-section">
@@ -359,10 +347,21 @@
                 return scores.reduce((acc, score) => acc + score, 0);
             }
 
-            // Function to adjust research paper score based on plagiarism percentile
-            function adjustPlagiarismScore(plagiarismPercentile, researchScore) {
-                const plagiarismPenalty = (plagiarismPercentile / 100) * 100;
-                return researchScore - plagiarismPenalty;
+            // Function to calculate plagiarism penalty based on percentile
+            function calculatePlagiarismPenalty(plagiarismPercentile) {
+                let penalty = 0;
+
+                if (plagiarismPercentile >= 0 && plagiarismPercentile <= 7) {
+                    penalty = 15; // High penalty
+                } else if (plagiarismPercentile >= 8 && plagiarismPercentile <= 20) {
+                    penalty = 0;  // No penalty
+                } else if (plagiarismPercentile >= 21 && plagiarismPercentile <= 30) {
+                    penalty = 10; // Moderate penalty
+                } else if (plagiarismPercentile > 30) {
+                    penalty = 20; // High penalty
+                }
+
+                return penalty;
             }
         });
     </script>
