@@ -99,6 +99,13 @@
             color: #555;
         }
 
+        .proposal-title {
+            word-wrap: break-word;
+            white-space: pre-wrap;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
         @media screen and (max-width: 768px) {
             table {
                 font-size: 14px;
@@ -251,11 +258,14 @@
                 // Apply plagiarism penalty
                 const plagiarismPenalty = calculatePlagiarismPenalty(paperScores.plagiarism_check_percentile);
 
+                // Calculate Submission Score
+                const submissionScore = researchPaperScore + presentationScore;
+
                 // Final score after penalty
-                const finalScore = Math.floor(researchPaperScore + presentationScore - plagiarismPenalty);
+                const finalScore = Math.floor(submissionScore - plagiarismPenalty);
 
                 // Plagiarism adjusted score
-                const plagiarismAdjustedScore = researchPaperScore + presentationScore - plagiarismPenalty;
+                const plagiarismAdjustedScore = submissionScore - plagiarismPenalty;
 
                 // Add content to the page
                 container.innerHTML = `
@@ -263,35 +273,37 @@
                     <p><strong>Name:</strong> ${name}</p>
                     <p><strong>Student ID:</strong> ${student_id}</p>
                     <p><strong>Institution:</strong> ${institution}</p>
-                    <p><strong>Category:</strong> ${category}</p>
-                    <p><strong>Year:</strong> ${year}</p>
-                    <p><strong>Research Proposal Title:</strong> ${research_proposal_title}</p>
+                    <p><strong>Category:</strong> ${category} | <strong>Year:</strong> ${year}</p>
+                    <p class="proposal-title"><strong>Research Proposal Title:</strong> ${research_proposal_title}</p>
 
-                    <div class="score-info">
-                        <div>
-                            <h3>Research Paper Score: ${researchPaperScore}</h3>
-                            <table>
-                                <tr><th>Criteria</th><th>Full Marks</th><th>Marks Obtained</th></tr>
-                                <tr><td>Research Problem</td><td>20</td><td>${paperScores.research_problem}</td></tr>
-                                <tr><td>Existing Literature</td><td>10</td><td>${paperScores.existing_literature}</td></tr>
-                                <tr><td>Research Question</td><td>25</td><td>${paperScores.research_question}</td></tr>
-                                <tr><td>Methodology</td><td>25</td><td>${paperScores.methodology}</td></tr>
-                                <tr><td>Research Topic</td><td>15</td><td>${paperScores.research_topic}</td></tr>
-                                <tr><td>Quality of Writing</td><td>5</td><td>${paperScores.quality_of_writing}</td></tr>
-                            </table>
-                        </div>
-                        <div>
-                            <h3>Presentation Score: ${presentationScore}</h3>
-                            <table>
-                                <tr><th>Criteria</th><th>Full Marks</th><th>Marks Obtained</th></tr>
-                                <tr><td>Persuasiveness</td><td>20</td><td>${presentationScores.persuasiveness}</td></tr>
-                                <tr><td>Video Quality</td><td>20</td><td>${presentationScores.video_quality}</td></tr>
-                                <tr><td>Research Problem</td><td>20</td><td>${presentationScores.research_problem}</td></tr>
-                                <tr><td>Research Question</td><td>20</td><td>${presentationScores.research_question}</td></tr>
-                                <tr><td>Methodology</td><td>20</td><td>${presentationScores.methodology}</td></tr>
-                            </table>
-                        </div>
-                    </div>
+                    <div class="section-title">Research Paper Score (Total: 100)</div>
+                    <table>
+                        <thead>
+                            <tr><th>Criteria</th><th>Student Obtained Marks</th><th>Full Marks</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Research Problem</td><td>${paperScores.research_problem}</td><td>20</td></tr>
+                            <tr><td>Existing Literature</td><td>${paperScores.existing_literature}</td><td>10</td></tr>
+                            <tr><td>Research Question</td><td>${paperScores.research_question}</td><td>25</td></tr>
+                            <tr><td>Methodology</td><td>${paperScores.methodology}</td><td>25</td></tr>
+                            <tr><td>Research Topic</td><td>${paperScores.research_topic}</td><td>15</td></tr>
+                            <tr><td>Quality of Writing</td><td>${paperScores.quality_of_writing}</td><td>5</td></tr>
+                        </tbody>
+                    </table>
+
+                    <div class="section-title">Presentation Score (Total: 100)</div>
+                    <table>
+                        <thead>
+                            <tr><th>Criteria</th><th>Student Obtained Marks</th><th>Full Marks</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Persuasiveness</td><td>${presentationScores.persuasiveness}</td><td>20</td></tr>
+                            <tr><td>Video Quality</td><td>${presentationScores.video_quality}</td><td>20</td></tr>
+                            <tr><td>Research Problem</td><td>${presentationScores.research_problem}</td><td>20</td></tr>
+                            <tr><td>Research Question</td><td>${presentationScores.research_question}</td><td>20</td></tr>
+                            <tr><td>Methodology</td><td>${presentationScores.methodology}</td><td>20</td></tr>
+                        </tbody>
+                    </table>
 
                     <div class="score-info">
                         <div>
@@ -300,6 +312,13 @@
                             <p><strong>Plagiarism Penalty:</strong> ${plagiarismPenalty}</p>
                             <p><strong>Plagiarism Adjusted Score:</strong> ${plagiarismAdjustedScore}</p>
                         </div>
+                        <div>
+                            <h3>Submission Score (Research + Presentation)</h3>
+                            <p><strong>Submission Score:</strong> ${submissionScore}</p>
+                        </div>
+                    </div>
+
+                    <div class="score-info">
                         <div>
                             <h3>Final Score</h3>
                             <p><strong>Final Score:</strong> ${finalScore}</p>
@@ -315,7 +334,7 @@
                 `;
             }
 
-            // Function to calculate score based on the sum of individual criteria
+            // Function to calculate the score based on the sum of individual criteria
             function calculateScore(...scores) {
                 return scores.reduce((acc, score) => acc + score, 0);
             }
@@ -338,6 +357,5 @@
             }
         });
     </script>
-
 </body>
 </html>
