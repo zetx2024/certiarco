@@ -14,86 +14,39 @@
     <link rel="icon" href="https://iarco.org/assets/logo.png"/>
     <link rel="canonical" href="https://cert.iarco.org"/>
     
-    <!-- Open Graph / Social Media -->
-    <meta property="og:title" content="Certificate Verification | IARCO">
-    <meta property="og:description" content="Verify and download your IARCO participation certificate. International Academic Research Competition.">
-    <meta property="og:url" content="https://cert.iarco.org">
-    <meta property="og:type" content="website">
-    <meta property="og:image" content="https://iarco.org/assets/logo.png">
-    
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Certificate Verification | IARCO">
-    <meta name="twitter:description" content="Verify and download your IARCO participation certificate">
-    <meta name="twitter:image" content="https://iarco.org/assets/logo.png">
-
     <!-- CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/fontawesome.min.css" integrity="sha384-BY+fdrpOd3gfeRvTSMT+VUZmA728cfF9Z2G42xpaRkUGu2i3DyzpTURDo5A6CaLK" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <script src="https://kit.fontawesome.com/0d89f9ac34.js" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://unpkg.com/pdf-lib@1.4.0"></script>
-    <script src="https://unpkg.com/downloadjs@1.4.7"></script>
-    <script src="https://unpkg.com/@pdf-lib/fontkit@0.0.4"></script>
     <link rel="stylesheet" href="https://iarco.org/css/main.css" />
-        
+    
     <style>
-        /* Enhanced Blue & Gold Theme - Certificate Verification */
-        :root {
-            --primary-blue: #003366;
-            --secondary-blue: #0749b3;
-            --accent-blue: #4b9cd3;
-            --primary-gold: #ffd700;
-            --secondary-gold: #daa520;
-            --white: #ffffff;
-            --light-gray: #f8f9fa;
-            --medium-gray: #e9ecef;
-            --dark-gray: #343a40;
-            --text-color: #2c3e50;
-            --header-bg: rgba(0, 51, 102, 0.95);
-            --footer-bg: rgba(0, 51, 102, 0.97);
-            --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            --border-radius: 8px;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            color: var(--text-color);
-            line-height: 1.6;
-            background-color: var(--light-gray);
-            margin: 0;
-            padding: 0;
-        }
-
+        /* Certificate Page Specific Styles */
         .certificate-container {
             max-width: 900px;
             margin: 2rem auto;
             padding: 2rem;
-            background-color: var(--white);
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
 
         .certificate-header {
             text-align: center;
             margin-bottom: 2rem;
             padding-bottom: 1rem;
-            border-bottom: 3px solid var(--primary-gold);
+            border-bottom: 3px solid #ffd700;
         }
 
         .certificate-header h2 {
-            color: var(--primary-blue);
+            color: #003366;
             font-weight: 700;
         }
 
         .certificate-header h3 {
-            color: var(--secondary-blue);
+            color: #0749b3;
             font-weight: 600;
         }
 
@@ -102,18 +55,18 @@
             text-align: center;
         }
 
-        .form-control {
+        #search {
             padding: 12px 15px;
-            border: 2px solid var(--medium-gray);
-            border-radius: var(--border-radius);
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
             width: 100%;
             max-width: 600px;
             margin: 0 auto;
             transition: all 0.3s ease;
         }
 
-        .form-control:focus {
-            border-color: var(--primary-blue);
+        #search:focus {
+            border-color: #003366;
             box-shadow: 0 0 0 0.25rem rgba(0, 83, 161, 0.25);
         }
 
@@ -128,8 +81,8 @@
             align-items: center;
             padding: 1rem;
             margin-bottom: 1rem;
-            background-color: var(--light-gray);
-            border-radius: var(--border-radius);
+            background-color: #f8f9fa;
+            border-radius: 8px;
             transition: all 0.3s ease;
         }
 
@@ -141,7 +94,7 @@
         .list-group-item img {
             margin-right: 1rem;
             border-radius: 50%;
-            border: 2px solid var(--primary-gold);
+            border: 2px solid #ffd700;
         }
 
         .student-info {
@@ -150,30 +103,30 @@
 
         .student-name {
             font-weight: 600;
-            color: var(--primary-blue);
+            color: #003366;
         }
 
         .student-details {
-            color: var(--dark-gray);
+            color: #343a40;
             font-size: 0.9rem;
         }
 
         .generate-btn {
-            background-color: var(--primary-gold);
-            color: var(--primary-blue) !important;
+            background-color: #ffd700;
+            color: #003366 !important;
             border: none;
             padding: 0.75rem 1.5rem;
-            border-radius: var(--border-radius);
+            border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             text-decoration: none;
             display: inline-block;
-            box-shadow: var(--box-shadow);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
 
         .generate-btn:hover {
-            background-color: var(--secondary-gold);
+            background-color: #daa520;
             transform: translateY(-2px);
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
         }
@@ -181,7 +134,7 @@
         .instructions {
             text-align: center;
             margin: 1.5rem 0;
-            color: var(--dark-gray);
+            color: #343a40;
             font-size: 0.9rem;
         }
 
@@ -189,22 +142,36 @@
             text-align: center;
             margin-top: 2rem;
             font-size: 0.9rem;
-            color: var(--dark-gray);
+            color: #343a40;
         }
 
         .developer-info a {
-            color: var(--primary-blue);
+            color: #003366;
             text-decoration: none;
             transition: all 0.2s ease;
         }
 
         .developer-info a:hover {
-            color: var(--secondary-blue);
+            color: #0749b3;
             text-decoration: underline;
         }
 
         #qrcode {
             display: none;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(0,51,102,.3);
+            border-radius: 50%;
+            border-top-color: #003366;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
         /* Responsive Adjustments */
@@ -290,7 +257,6 @@
         <div class="certificate-header">
             <h2>Verify Identity & Certificate</h2>
             <h3>International Academic Research Competition</h3>
-            <a href="https://iarco.org" class="generate-btn">Back to Home</a>
         </div>
 
         <div class="instructions">
@@ -300,6 +266,7 @@
 
         <div class="search-container">
             <input type="text" name="search" id="search" placeholder="Search Student: Name, Verification Code" class="form-control" />
+            <div id="loading" style="display: none; margin-top: 10px;"><span class="loading"></span> Loading participants...</div>
         </div>
 
         <ul class="list-group" id="result"></ul>
@@ -311,12 +278,6 @@
     </div>
 
     <div id="qrcode"></div>
-
-         <!-- Import the required libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.16.0/pdf-lib.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@pdf-lib/fontkit@1.1.1/dist/fontkit.umd.min.js"></script>
 
     <!-- Footer -->
     <footer class="footer">
@@ -370,98 +331,132 @@
     <script src="https://cdn.jsdelivr.net/npm/@pdf-lib/fontkit@1.1.1/dist/fontkit.umd.min.js"></script>
 
     <script>
-        $(document).ready(function () {
-            $.ajaxSetup({ cache: false });
-            $('#search').keyup(function () {
-                $('#result').html('');
-                var searchField = $('#search').val();
-                var expression = new RegExp(searchField, "i");
-                $.getJSON('https://iarco.org/participant.json', function (data) {
-                    $.each(data, function (key, value) {
-                        if (value.name.search(expression) != -1 || value.id.search(expression) != -1) {
-                            $('#result').append(`
-                                <li class="list-group-item link-class">
-                                    <img src="${value.image}" height="60" width="60" class="img-thumbnail" />
-                                    <div class="student-info">
-                                        <div class="student-name">${value.name}</div>
-                                        <div class="student-details">
-                                            ${value.role} | ${value.school} | ID: ${value.id}
-                                        </div>
-                                    </div>
-                                    <button class="generate-btn" onclick="generateCertificate('${value.id}', '${value.name}', '${value.school}', '${value.role}', '${value.date}')">
-                                        Generate Certificate
-                                    </button>
-                                </li>
-                            `);
-                        }
-                    });
-                });
-            });
+        // Global variable to store participant data
+        let participantData = [];
+        let isGeneratingCertificate = false;
 
-            $('#result').on('click', 'li', function () {
-                var click_text = $(this).text().split('|');
-                $('#search').val($.trim(click_text[0]));
-                $("#result").html('');
+        $(document).ready(function () {
+            // Load participant data when page loads
+            loadParticipantData();
+            
+            $('#search').keyup(function () {
+                if (!participantData.length) return;
+                
+                $('#result').html('');
+                var searchField = $('#search').val().toLowerCase();
+                
+                if (searchField.length === 0) return;
+                
+                var filteredData = participantData.filter(function(value) {
+                    return value.name.toLowerCase().includes(searchField) || 
+                           value.id.toLowerCase().includes(searchField);
+                });
+
+                if (filteredData.length === 0) {
+                    $('#result').html('<li class="list-group-item">No matching participants found</li>');
+                    return;
+                }
+
+                filteredData.forEach(function(value) {
+                    $('#result').append(`
+                        <li class="list-group-item link-class">
+                            <img src="${value.image || 'https://via.placeholder.com/60'}" height="60" width="60" class="img-thumbnail" />
+                            <div class="student-info">
+                                <div class="student-name">${value.name}</div>
+                                <div class="student-details">
+                                    ${value.role} | ${value.school} | ID: ${value.id}
+                                </div>
+                            </div>
+                            <button class="generate-btn" onclick="generateCertificate('${value.id}', '${value.name}', '${value.school}', '${value.role}', '${value.date}')">
+                                Generate Certificate
+                            </button>
+                        </li>
+                    `);
+                });
             });
         });
 
+        async function loadParticipantData() {
+            try {
+                $('#loading').show();
+                const response = await fetch('participant.json');
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                participantData = await response.json();
+                $('#loading').hide();
+                
+                if (!Array.isArray(participantData)) {
+                    throw new Error("Participant data is not in expected format");
+                }
+            } catch (error) {
+                console.error("Error loading participant data:", error);
+                $('#loading').html('<span style="color:red">Error loading participants. Please try again later.</span>');
+                $('#result').html('<li class="list-group-item">Error loading participant data. Please try again later.</li>');
+            }
+        }
+
         async function generateCertificate(studentId, studentName, school, role, date) {
-            // Load the PDF template
-            const pdfUrl = 'https://iarco.org/iarcocert.pdf';
-            const existingPdfBytes = await fetch(pdfUrl).then(res => res.arrayBuffer());
-            const pdfDoc = await PDFLib.PDFDocument.load(existingPdfBytes);
-
-            // Register fontkit for custom font embedding
-            pdfDoc.registerFontkit(fontkit);
-
-            // Get fonts
-            const fontBytes1 = await fetch("https://iarco.org/GreatVibes-Regular.ttf").then((res) =>
-                res.arrayBuffer()
-            );
-            const fontBytes2 = await fetch("https://iarco.org/pt-sans.ttf").then((res) =>
-                res.arrayBuffer()
-            );
-
-            // Embed our custom font in the document
-            const GreatVibes = await pdfDoc.embedFont(fontBytes1);
-            const PtSans = await pdfDoc.embedFont(fontBytes2);
-
-            const pages = pdfDoc.getPages();
-            const firstPage = pages[0];
-
-            // Add student details to the PDF
-            const fsN = 35;
-            const fsP = 15;
-            const fsR = 14;
-            const fsD = 14;
-            const fsId = 12;
+            if (isGeneratingCertificate) return;
+            isGeneratingCertificate = true;
             
-            const textWidthN = GreatVibes.widthOfTextAtSize(`${studentName}`, fsN);
-            const textHeightN = GreatVibes.heightAtSize(fsN);
-            
-            firstPage.drawText(`${studentName}`, {
-                x: firstPage.getWidth() / 2 - textWidthN / 2,
-                y: firstPage.getHeight() / 1.57 - textHeightN / 2,
-                size: fsN,
-                font: GreatVibes,
-            });
-            
-            const textWidthS = PtSans.widthOfTextAtSize(`${school}`, fsP);
-            const textHeightS = PtSans.heightAtSize(fsP);
-            firstPage.drawText(`${school}`, {
-                x: firstPage.getWidth() / 2 - textWidthS / 2,
-                y: firstPage.getHeight() / 1.9 - textHeightS / 2,
-                size: fsP,
-                font: PtSans,
-            });
+            try {
+                // Show generating message
+                const originalButtonText = $(event.target).text();
+                $(event.target).html('<span class="loading"></span> Generating...');
+                $(event.target).prop('disabled', true);
+                
+                // Load the PDF template
+                const pdfUrl = 'iarcocert.pdf';
+                const existingPdfBytes = await fetch(pdfUrl).then(res => res.arrayBuffer());
+                const pdfDoc = await PDFLib.PDFDocument.load(existingPdfBytes);
 
-            firstPage.drawText(studentId, { x: 700, y: 500, size: 9 });
-            firstPage.drawText(role+" Category", { x: 490, y: 283, size: 14 });
-            firstPage.drawText(`${date}`, { x: 530, y: 260, size: 14 });
-            
-            // Generate QR code
-            const qrData = `ID: ${studentId}\nName: ${studentName}\nInstitute: ${school}\nCategory: ${role}\nDate: ${date}\nVerify at: https://cert.iarco.org`;
-            generateQRCode(qrData, async function (qrDataUrl) {
+                // Register fontkit for custom font embedding
+                pdfDoc.registerFontkit(fontkit);
+
+                // Get fonts
+                const fontBytes1 = await fetch("GreatVibes-Regular.ttf").then(res => res.arrayBuffer());
+                const fontBytes2 = await fetch("pt-sans.ttf").then(res => res.arrayBuffer());
+
+                // Embed our custom font in the document
+                const GreatVibes = await pdfDoc.embedFont(fontBytes1);
+                const PtSans = await pdfDoc.embedFont(fontBytes2);
+
+                const pages = pdfDoc.getPages();
+                const firstPage = pages[0];
+
+                // Add student details to the PDF
+                const fsN = 35;
+                const fsP = 15;
+                
+                const textWidthN = GreatVibes.widthOfTextAtSize(`${studentName}`, fsN);
+                const textHeightN = GreatVibes.heightAtSize(fsN);
+                
+                firstPage.drawText(`${studentName}`, {
+                    x: firstPage.getWidth() / 2 - textWidthN / 2,
+                    y: firstPage.getHeight() / 1.57 - textHeightN / 2,
+                    size: fsN,
+                    font: GreatVibes,
+                });
+                
+                const textWidthS = PtSans.widthOfTextAtSize(`${school}`, fsP);
+                const textHeightS = PtSans.heightAtSize(fsP);
+                firstPage.drawText(`${school}`, {
+                    x: firstPage.getWidth() / 2 - textWidthS / 2,
+                    y: firstPage.getHeight() / 1.9 - textHeightS / 2,
+                    size: fsP,
+                    font: PtSans,
+                });
+
+                firstPage.drawText(studentId, { x: 700, y: 500, size: 9 });
+                firstPage.drawText(role+" Category", { x: 490, y: 283, size: 14 });
+                firstPage.drawText(`${date}`, { x: 530, y: 260, size: 14 });
+                
+                // Generate QR code
+                const qrData = `ID: ${studentId}\nName: ${studentName}\nInstitute: ${school}\nCategory: ${role}\nDate: ${date}\nVerify at: https://cert.iarco.org`;
+                const qrDataUrl = await generateQRCodeAsync(qrData);
                 const qrImageBytes = await fetch(qrDataUrl).then(res => res.arrayBuffer());
                 const qrImage = await pdfDoc.embedPng(qrImageBytes);
                 const qrSize = 90;
@@ -472,43 +467,60 @@
                     height: qrSize
                 });
 
-                // Set all available metadata fields on the PDFDocument
+                // Set PDF metadata
                 pdfDoc.setTitle(`Certificate | ${studentName} | ${school}`);
-                pdfDoc.setAuthor('Md Sanaul Haque Shanto');
+                pdfDoc.setAuthor('IARCO Team');
                 pdfDoc.setSubject(`IARCO Participation Certificate`);
-                pdfDoc.setKeywords(['IARCO', 'competition', 'university', 'year', 'research', 'school', 'program']);
-                pdfDoc.setProducer('Md Sanaul Haque Shanto');
-                pdfDoc.setCreator('IARCO (https://cert.iarco.org)');
-                pdfDoc.setCreationDate(new Date('2024/11/10'));
-                pdfDoc.setModificationDate(new Date());
+                pdfDoc.setKeywords(['IARCO', 'certificate', 'research', 'competition']);
+                pdfDoc.setProducer('IARCO Certificate Generator');
+                pdfDoc.setCreator('https://cert.iarco.org');
 
                 const pdfBytes = await pdfDoc.save();
                 downloadPDF(pdfBytes, `${studentId}_${studentName}_IARCO_certificate.pdf`);
-            });
+                
+            } catch (error) {
+                console.error("Error generating certificate:", error);
+                alert("Error generating certificate. Please try again or contact support.");
+            } finally {
+                isGeneratingCertificate = false;
+                if (event && event.target) {
+                    $(event.target).text(originalButtonText);
+                    $(event.target).prop('disabled', false);
+                }
+            }
         }
 
-        function generateQRCode(text, callback) {
-            const qrElement = document.getElementById('qrcode');
-            qrElement.innerHTML = '';
-            new QRCode(qrElement, {
-                text: text,
-                width: 90,
-                height: 90,
-                correctLevel: QRCode.CorrectLevel.H
+        function generateQRCodeAsync(text) {
+            return new Promise((resolve) => {
+                const qrElement = document.getElementById('qrcode');
+                qrElement.innerHTML = '';
+                new QRCode(qrElement, {
+                    text: text,
+                    width: 90,
+                    height: 90,
+                    correctLevel: QRCode.CorrectLevel.H
+                });
+                setTimeout(() => {
+                    const qrCanvas = qrElement.querySelector('canvas');
+                    const qrDataUrl = qrCanvas.toDataURL('image/png');
+                    resolve(qrDataUrl);
+                }, 500);
             });
-            setTimeout(() => {
-                const qrCanvas = qrElement.querySelector('canvas');
-                const qrDataUrl = qrCanvas.toDataURL('image/png');
-                callback(qrDataUrl);
-            }, 500); // Delay to ensure QR code is rendered
         }
 
         function downloadPDF(pdfBytes, filename) {
-            const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-            const link = document.createElement('a');
-            link.href = window.URL.createObjectURL(blob);
-            link.download = filename;
-            link.click();
+            try {
+                const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+                const link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = filename;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            } catch (error) {
+                console.error("Error downloading PDF:", error);
+                alert("Error downloading certificate. Please allow pop-ups and try again.");
+            }
         }
 
         // Footer subscription form handling
