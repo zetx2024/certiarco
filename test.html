@@ -1,55 +1,356 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+    <!-- Meta Tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Certificate | IARCO</title>
+    <title>Certificate Verification | IARCO</title>
+    <meta name="description" content="Verify and download your IARCO participation certificate. International Academic Research Competition.">
+    <meta name="keywords" content="IARCO, certificate, verification, research competition, academic competition">
+    <meta name="author" content="International Academic Research Competition">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="https://iarco.org/assets/logo.png"/>
+    <link rel="canonical" href="https://cert.iarco.org"/>
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:title" content="Certificate Verification | IARCO">
+    <meta property="og:description" content="Verify and download your IARCO participation certificate. International Academic Research Competition.">
+    <meta property="og:url" content="https://cert.iarco.org">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://iarco.org/assets/logo.png">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Certificate Verification | IARCO">
+    <meta name="twitter:description" content="Verify and download your IARCO participation certificate">
+    <meta name="twitter:image" content="https://iarco.org/assets/logo.png">
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://unpkg.com/pdf-lib@1.4.0"></script>
-    <script src="https://unpkg.com/downloadjs@1.4.7"></script>
-    <script src="https://unpkg.com/@pdf-lib/fontkit@0.0.4"></script>
+    <!-- CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/fontawesome.min.css" integrity="sha384-BY+fdrpOd3gfeRvTSMT+VUZmA728cfF9Z2G42xpaRkUGu2i3DyzpTURDo5A6CaLK" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <script src="https://kit.fontawesome.com/0d89f9ac34.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    
     <style>
+        /* Enhanced Blue & Gold Theme - Certificate Verification */
+        :root {
+            --primary-blue: #003366;
+            --secondary-blue: #0749b3;
+            --accent-blue: #4b9cd3;
+            --primary-gold: #ffd700;
+            --secondary-gold: #daa520;
+            --white: #ffffff;
+            --light-gray: #f8f9fa;
+            --medium-gray: #e9ecef;
+            --dark-gray: #343a40;
+            --text-color: #2c3e50;
+            --header-bg: rgba(0, 51, 102, 0.95);
+            --footer-bg: rgba(0, 51, 102, 0.97);
+            --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            --border-radius: 8px;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
+            font-family: 'Inter', sans-serif;
+            color: var(--text-color);
+            line-height: 1.6;
+            background-color: var(--light-gray);
+            margin: 0;
+            padding: 0;
         }
-        .container {
-            width: 900px;
-            margin: auto;
+
+        .certificate-container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
         }
+
+        .certificate-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid var(--primary-gold);
+        }
+
+        .certificate-header h2 {
+            color: var(--primary-blue);
+            font-weight: 700;
+        }
+
+        .certificate-header h3 {
+            color: var(--secondary-blue);
+            font-weight: 600;
+        }
+
+        .search-container {
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .form-control {
+            padding: 12px 15px;
+            border: 2px solid var(--medium-gray);
+            border-radius: var(--border-radius);
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 0.25rem rgba(0, 83, 161, 0.25);
+        }
+
+        #result {
+            margin: 1.5rem 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .list-group-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background-color: var(--light-gray);
+            border-radius: var(--border-radius);
+            transition: all 0.3s ease;
+        }
+
+        .list-group-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .list-group-item img {
+            margin-right: 1rem;
+            border-radius: 50%;
+            border: 2px solid var(--primary-gold);
+        }
+
+        .student-info {
+            flex: 1;
+        }
+
+        .student-name {
+            font-weight: 600;
+            color: var(--primary-blue);
+        }
+
+        .student-details {
+            color: var(--dark-gray);
+            font-size: 0.9rem;
+        }
+
+        .generate-btn {
+            background-color: var(--primary-gold);
+            color: var(--primary-blue) !important;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: var(--box-shadow);
+        }
+
+        .generate-btn:hover {
+            background-color: var(--secondary-gold);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .instructions {
+            text-align: center;
+            margin: 1.5rem 0;
+            color: var(--dark-gray);
+            font-size: 0.9rem;
+        }
+
+        .developer-info {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: var(--dark-gray);
+        }
+
+        .developer-info a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .developer-info a:hover {
+            color: var(--secondary-blue);
+            text-decoration: underline;
+        }
+
         #qrcode {
             display: none;
         }
-        .form-control {
-            padding: 10px;
-            width: 80%;
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .certificate-container {
+                padding: 1.5rem;
+                margin: 1rem;
+            }
+            
+            .list-group-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .list-group-item img {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+            
+            .generate-btn {
+                margin-top: 1rem;
+                width: 100%;
+            }
         }
+
+        /* Animation for search results */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .list-group-item {
-            margin-top: 10px;
+            animation: fadeIn 0.3s ease-out forwards;
         }
     </style>
 </head>
+
 <body>
-    <div class="container">
-        <h2 align="center">Verify Identity & Certificate</h2>
-        <h3 align="center">IARCO</h3>
-        <center><button><a href="https://iarco.org">Home</a></button></center>
-        <p align="center">Allow pop-up for this site to download Certificate.</p>
-        <p align="center">Use Google Chrome Browser for Better Download option.</p>
-        <div align="center">
+    <!-- Navigation -->
+    <nav class="navbar sticky-top navbar-expand-lg navbar-light sticky-top">
+        <div class="container">
+            <div class="d-flex align-items-center">
+                <a class="navbar-brand text-uppercase" href="https://iarco.org/">
+                    <img src="https://iarco.org/assets/logo.png" width="80%" height="70px" class="d-inline-block align-top">
+                </a>
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-chart-bar"></i> About</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="https://iarco.org/what-is-iarco"><i class="fas fa-question"></i> What is IARCO?</a></li>
+                            <li><a class="dropdown-item" href="https://iarco.org/prizes"><i class="fas fa-trophy"></i> Prizes</a></li>
+                            <li><a class="dropdown-item" href="https://iarco.org/partners"><i class="fas fa-handshake"></i> Partners</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://iarco.org/timeline"><i class="fas fa-calendar-alt"></i> Timeline</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fab fa-hubspot"></i> Competition Hubs</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="https://iarco.org/bootcamps"><i class="fas fa-dumbbell"></i> Bootcamps</a></li>
+                            <li><a class="dropdown-item" href="https://iarco.org/guidelines"><i class="fas fa-chalkboard-teacher"></i> Guidelines</a></li>
+                            <li><a class="dropdown-item" href="https://iarco.org/2024-finalists"><i class="fas fa-running"></i> 2024 Finalists</a></li>
+                            <li><a class="dropdown-item" href="https://iarco.org/2024-winners"><i class="fas fa-trophy"></i> 2024 Winners</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://iarco.org/faq"><i class="fas fa-question"></i> FAQs</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Certificate Verification Content -->
+    <div class="certificate-container">
+        <div class="certificate-header">
+            <h2>Verify Identity & Certificate</h2>
+            <h3>International Academic Research Competition</h3>
+            <a href="https://iarco.org" class="generate-btn">Back to Home</a>
+        </div>
+
+        <div class="instructions">
+            <p>Allow pop-up for this site to download Certificate. Wait 10 seconds for generation.</p>
+            <p>Use Google Chrome Browser for best download experience.</p>
+        </div>
+
+        <div class="search-container">
             <input type="text" name="search" id="search" placeholder="Search Student: Name, Verification Code" class="form-control" />
         </div>
+
         <ul class="list-group" id="result"></ul>
-        <p align="center">Developed by <a href="https://md-sanaul-haque-shanto.github.io">Md Sanaul Haque Shanto</a>.</p>
-        <p align="center" style="font-size: 10px;">Any Error, Suggestions, Design, Mail me at shanto@eptonline.org</p>
+
+        <div class="developer-info">
+            <p>Developed by <a href="https://md-sanaul-haque-shanto.github.io">Md Sanaul Haque Shanto</a>.</p>
+            <p style="font-size: 0.8rem;">Any Error, Suggestions, Design, Mail me at <a href="mailto:shanto@eptonline.org">shanto@eptonline.org</a></p>
+        </div>
     </div>
 
     <div id="qrcode"></div>
 
-    <!-- Import the required libraries -->
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4 pb-3">
+                    <img src="https://iarco.org/assets/logo.png" class="img-fluid">
+                    <h4 style="color: white;">Contact Us</h4>
+                    <p>Contact us at hello@iarco.org!</p>
+                    <p><a href="https://iarco.org/terms-conditions">Terms & Conditions</a></p>
+                </div>
+                <div class="col-sm-4 pb-2">
+                    <h4 style="color: white;">Social Media</h4>
+                    <p><a href="https://www.facebook.com/iarco.org"><i class="fab fa-facebook-square"></i> Facebook</a></p>
+                    <p><a href="https://www.instagram.com/intresearchcomp"><i class="fab fa-instagram"></i> Instagram</a></p>
+                    <p><a href="https://www.youtube.com/@iarcomp"><i class="fab fa-youtube"></i> Youtube</a></p>
+                    <p><a href="https://www.linkedin.com/company/iarco"><i class="fab fa-linkedin"></i> Linkedin</a> </p>
+                </div>
+
+                <div class="col-sm-4 pb-1">
+                    <h4 style="color: white;">Information</h4>
+                    <p><a href="https://iarco.org/what-is-iarco"><i class="fas fa-chart-bar"></i> About Competition</a></p>
+                    <p><a href="https://iarco.org/timeline"><i class="fas fa-calendar-alt"></i> Timeline</a></p>
+                    <p><a href="https://iarco.org/prizes"><i class="fas fa-trophy"></i> Prizes</a></p>
+                    <p><a href="https://iarco.org/bootcamps"><i class="fas fa-dumbbell"></i> Bootcamp</a></p>
+                    <p><a href="https://cert.iarco.org/"><i class="fas fa-certificate"></i> Certificate</a></p>
+                </div>
+                
+                <div class="col-sm-4 pb-1 footer-subscribe">
+                    <h5>Subscribe to Our Newsletter</h5>
+                    <form class="subscribe-form" id="footer-subscribe-form">
+                        <input name="email" type="email" placeholder="Your Email" required>
+                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                    <div class="subscribe-message" id="footer-subscribe-message"></div>
+                </div>
+            </div>
+            <div class="rights">
+                &copy; 2024 - <script>document.write(new Date().getFullYear());</script> All Rights reserved | International Academic Research Competition
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.16.0/pdf-lib.min.js"></script>
@@ -62,14 +363,21 @@
                 $('#result').html('');
                 var searchField = $('#search').val();
                 var expression = new RegExp(searchField, "i");
-                $.getJSON('participant.json', function (data) {
+                $.getJSON('https://iarco.org/participant.json', function (data) {
                     $.each(data, function (key, value) {
                         if (value.name.search(expression) != -1 || value.id.search(expression) != -1) {
                             $('#result').append(`
                                 <li class="list-group-item link-class">
-                                    <img src="${value.image}" height="40" width="40" class="img-thumbnail" /> ${value.name} | 
-                                    <span class="text-muted">${value.role}</span> | <span class="text-muted">${value.school}</span>
-                                    <button onclick="generateCertificate('${value.id}', '${value.name}', '${value.school}', '${value.role}', '${value.date}')">Generate Certificate</button>
+                                    <img src="${value.image}" height="60" width="60" class="img-thumbnail" />
+                                    <div class="student-info">
+                                        <div class="student-name">${value.name}</div>
+                                        <div class="student-details">
+                                            ${value.role} | ${value.school} | ID: ${value.id}
+                                        </div>
+                                    </div>
+                                    <button class="generate-btn" onclick="generateCertificate('${value.id}', '${value.name}', '${value.school}', '${value.role}', '${value.date}')">
+                                        Generate Certificate
+                                    </button>
                                 </li>
                             `);
                         }
@@ -86,62 +394,58 @@
 
         async function generateCertificate(studentId, studentName, school, role, date) {
             // Load the PDF template
-            const pdfUrl = 'iarcocert.pdf';
+            const pdfUrl = 'https://iarco.org/iarcocert.pdf';
             const existingPdfBytes = await fetch(pdfUrl).then(res => res.arrayBuffer());
             const pdfDoc = await PDFLib.PDFDocument.load(existingPdfBytes);
 
             // Register fontkit for custom font embedding
             pdfDoc.registerFontkit(fontkit);
 
-          //get font
-      const fontBytes1 = await fetch("GreatVibes-Regular.ttf").then((res) =>
-        res.arrayBuffer()
-      );
-    const fontBytes2 = await fetch("pt-sans.ttf").then((res) =>
-        res.arrayBuffer()
-      );
+            // Get fonts
+            const fontBytes1 = await fetch("https://iarco.org/GreatVibes-Regular.ttf").then((res) =>
+                res.arrayBuffer()
+            );
+            const fontBytes2 = await fetch("https://iarco.org/pt-sans.ttf").then((res) =>
+                res.arrayBuffer()
+            );
 
-      // Embed our custom font in the document
-      const GreatVibes = await pdfDoc.embedFont(fontBytes1);
-      const PtSans = await pdfDoc.embedFont(fontBytes2);
+            // Embed our custom font in the document
+            const GreatVibes = await pdfDoc.embedFont(fontBytes1);
+            const PtSans = await pdfDoc.embedFont(fontBytes2);
 
             const pages = pdfDoc.getPages();
             const firstPage = pages[0];
 
             // Add student details to the PDF
-            const fontSize = 30;
-             const fsN = 35;
-      const fsP = 15;
-      const fsR = 14;
-      const fsD = 14;
-      const fsId = 12;
-          
-
-             const textWidthN = GreatVibes.widthOfTextAtSize(`${studentName}`, fsN);
+            const fsN = 35;
+            const fsP = 15;
+            const fsR = 14;
+            const fsD = 14;
+            const fsId = 12;
+            
+            const textWidthN = GreatVibes.widthOfTextAtSize(`${studentName}`, fsN);
             const textHeightN = GreatVibes.heightAtSize(fsN);
             
             firstPage.drawText(`${studentName}`, {
-      x: firstPage.getWidth() / 2 - textWidthN / 2,
-      y: firstPage.getHeight() / 1.57 - textHeightN / 2,
-      size: fsN,
-      font: GreatVibes,
-    });
+                x: firstPage.getWidth() / 2 - textWidthN / 2,
+                y: firstPage.getHeight() / 1.57 - textHeightN / 2,
+                size: fsN,
+                font: GreatVibes,
+            });
+            
             const textWidthS = PtSans.widthOfTextAtSize(`${school}`, fsP);
             const textHeightS = PtSans.heightAtSize(fsP);
             firstPage.drawText(`${school}`, {
-      x: firstPage.getWidth() / 2 - textWidthS / 2,
-      y: firstPage.getHeight() / 1.9 - textHeightS / 2,
-      size: fsP,
-      font: PtSans,
-    });
+                x: firstPage.getWidth() / 2 - textWidthS / 2,
+                y: firstPage.getHeight() / 1.9 - textHeightS / 2,
+                size: fsP,
+                font: PtSans,
+            });
 
-            
             firstPage.drawText(studentId, { x: 700, y: 500, size: 9 });
-
-            firstPage.drawText(role, { x: 505, y: 282, size: 14 });
-            firstPage.drawText(`${date}`, { x: 521, y: 260, size: 14 });
+            firstPage.drawText(role+" Category", { x: 490, y: 283, size: 14 });
+            firstPage.drawText(`${date}`, { x: 530, y: 260, size: 14 });
             
-
             // Generate QR code
             const qrData = `ID: ${studentId}\nName: ${studentName}\nInstitute: ${school}\nCategory: ${role}\nDate: ${date}\nVerify at: https://cert.iarco.org`;
             generateQRCode(qrData, async function (qrDataUrl) {
@@ -155,17 +459,15 @@
                     height: qrSize
                 });
 
-
-                // Set all available metadata fields on the PDFDocument. Note that these fields
-        // are visible in the "Document Properties" section of most PDF readers.
-        pdfDoc.setTitle(`Certificate | ${studentName} | ${school}`);
-        pdfDoc.setAuthor('Md Sanaul Haque Shanto');
-        pdfDoc.setSubject(`IARCO Participation Certificate`);
-        pdfDoc.setKeywords(['IARCO', 'competition', 'university', 'year', 'research', 'school', 'program']);
-        pdfDoc.setProducer('Md Sanaul Haque Shanto');
-        pdfDoc.setCreator('IARCO (https://cert.iarco.org)');
-        pdfDoc.setCreationDate(new Date('2024/11/10'));
-        pdfDoc.setModificationDate(new Date());
+                // Set all available metadata fields on the PDFDocument
+                pdfDoc.setTitle(`Certificate | ${studentName} | ${school}`);
+                pdfDoc.setAuthor('Md Sanaul Haque Shanto');
+                pdfDoc.setSubject(`IARCO Participation Certificate`);
+                pdfDoc.setKeywords(['IARCO', 'competition', 'university', 'year', 'research', 'school', 'program']);
+                pdfDoc.setProducer('Md Sanaul Haque Shanto');
+                pdfDoc.setCreator('IARCO (https://cert.iarco.org)');
+                pdfDoc.setCreationDate(new Date('2024/11/10'));
+                pdfDoc.setModificationDate(new Date());
 
                 const pdfBytes = await pdfDoc.save();
                 downloadPDF(pdfBytes, `${studentId}_${studentName}_IARCO_certificate.pdf`);
@@ -195,6 +497,24 @@
             link.download = filename;
             link.click();
         }
+
+        // Footer subscription form handling
+        const FscriptURL = 'https://script.google.com/macros/s/AKfycbzygrg2R9ubz8wwovssC4UUhXLbEMjqSh3So08-cFXnVvAxRiHm9H0tPszGrF4i4dtJ1g/exec';
+        const Fform = document.forms['footer-subscribe-form'];
+        const FSubId = document.getElementById("footer-subscribe-message");
+
+        Fform.addEventListener('submit', e => {
+            e.preventDefault();
+            fetch(FscriptURL, { method: 'POST', body: new FormData(Fform)})
+                .then(response => {
+                    FSubId.innerHTML = "Thank You for Subscribing us!";
+                    setTimeout(function() {
+                        FSubId.innerHTML = "";
+                    }, 3000);
+                    Fform.reset();
+                })
+                .catch(error => console.error('Error!', error.message));
+        });
     </script>
 </body>
 </html>
