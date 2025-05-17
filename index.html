@@ -228,6 +228,7 @@
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-chart-bar"></i> About</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="https://iarco.org/what-is-iarco"><i class="fas fa-question"></i> What is IARCO?</a></li>
+                            <li><a class="dropdown-item" href="https://iarco.org/iarco-backbone"><i class="fas fa-users"></i> IARCO Backbone</a></li>
                             <li><a class="dropdown-item" href="https://iarco.org/prizes"><i class="fas fa-trophy"></i> Prizes</a></li>
                             <li><a class="dropdown-item" href="https://iarco.org/partners"><i class="fas fa-handshake"></i> Partners</a></li>
                         </ul>
@@ -238,6 +239,8 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fab fa-hubspot"></i> Competition Hubs</a>
                         <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="https://iarco.org/2025-finalists"><i class="fas fa-running"></i> 2025 Finalists</a></li>
+                            <li><a class="dropdown-item" href="https://iarco.org/2025-winners"><i class="fas fa-trophy"></i> 2025 Winners</a></li>
                             <li><a class="dropdown-item" href="https://iarco.org/bootcamps"><i class="fas fa-dumbbell"></i> Bootcamps</a></li>
                             <li><a class="dropdown-item" href="https://iarco.org/guidelines"><i class="fas fa-chalkboard-teacher"></i> Guidelines</a></li>
                             <li><a class="dropdown-item" href="https://iarco.org/2024-finalists"><i class="fas fa-running"></i> 2024 Finalists</a></li>
@@ -288,6 +291,7 @@
                     <h4 style="color: white;">Contact Us</h4>
                     <p>Contact us at hello@iarco.org!</p>
                     <p><a href="https://iarco.org/terms-conditions">Terms & Conditions</a></p>
+                    <p><a href="https://iarco.org/privacy-policy">Privacy Policy</a></p>
                 </div>
                 <div class="col-sm-4 pb-2">
                     <h4 style="color: white;">Social Media</h4>
@@ -300,6 +304,7 @@
                 <div class="col-sm-4 pb-1">
                     <h4 style="color: white;">Information</h4>
                     <p><a href="https://iarco.org/what-is-iarco"><i class="fas fa-chart-bar"></i> About Competition</a></p>
+                    <p><a href="https://iarco.org/iarco-backbone"><i class="fas fa-users"></i> IARCO Backbone</a></p>
                     <p><a href="https://iarco.org/timeline"><i class="fas fa-calendar-alt"></i> Timeline</a></p>
                     <p><a href="https://iarco.org/prizes"><i class="fas fa-trophy"></i> Prizes</a></p>
                     <p><a href="https://iarco.org/bootcamps"><i class="fas fa-dumbbell"></i> Bootcamp</a></p>
@@ -360,7 +365,7 @@
                 filteredData.forEach(function(value) {
                     $('#result').append(`
                         <li class="list-group-item link-class">
-                            <img src="${value.image || 'https://via.placeholder.com/60'}" height="60" width="60" class="img-thumbnail" />
+                            <img src="${value.image || 'https://iarco.org/assets/logo.png'}" height="60" width="60" class="img-thumbnail" />
                             <div class="student-info">
                                 <div class="student-name">${value.name}</div>
                                 <div class="student-details">
