@@ -1,8 +1,8 @@
 [
   {
     "id": "OWKOTjaD22",
-    "name": "Sameera Khan",
-    "school": "Notre Dame University Bangladesh",
+    "name": "Md Sanaul Haque Shanto",
+    "school": "YRJ University",
     "program": "IARCO 2024",
     "batch": "1st",
     "image": "https://iarco.org/fevicon/android-chrome-192x192.png",
@@ -11,13 +11,13 @@
     "years": "2024"
   },
   {
-    "id": "LohEDj6T",
-    "name": "Md Ibrahim Hossain",
-    "school": "Bangladesh University of Textiles",
+    "id": "OWKOTjaD21",
+    "name": "Md Sanaul Haque Shanto",
+    "school": "YRJ High School",
     "program": "IARCO 2025",
-    "batch": "1st",
+    "batch": "2nd",
     "image": "https://iarco.org/fevicon/android-chrome-192x192.png",
-    "role": "Senior",
+    "role": "Junior",
     "date": "November 20, 2025",
     "years": "2025"
   }
