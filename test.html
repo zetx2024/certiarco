@@ -453,7 +453,7 @@
             firstPage.drawText(role+" Category", { x: 490, y: 283, size: 14 });
             firstPage.drawText(`${date}`, { x: 530, y: 260, size: 14 });
 
-            const qrData = `ID: ${studentId}\nName: ${studentName}\nInstitute: ${school}\nCategory: ${role}\nDate: ${years}\nVerify at: https://cert.iarco.org`;
+            const qrData = `ID: ${studentId}\nName: ${studentName}\nInstitute: ${school}\nCategory: ${role}\nYear: ${years}\nVerify at: https://cert.iarco.org`;
             const qrDataUrl = await generateQRCodeAsync(qrData);
             const qrImageBytes = await fetch(qrDataUrl).then(res => res.arrayBuffer());
             const qrImage = await pdfDoc.embedPng(qrImageBytes);
