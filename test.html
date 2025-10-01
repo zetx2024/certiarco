@@ -477,6 +477,38 @@
             }
         }
     }
+   function generateQRCodeAsync(text) {
+            return new Promise((resolve) => {
+                const qrElement = document.getElementById('qrcode');
+                qrElement.innerHTML = '';
+                new QRCode(qrElement, {
+                    text: text,
+                    width: 90,
+                    height: 90,
+                    correctLevel: QRCode.CorrectLevel.H
+                });
+                setTimeout(() => {
+                    const qrCanvas = qrElement.querySelector('canvas');
+                    const qrDataUrl = qrCanvas.toDataURL('image/png');
+                    resolve(qrDataUrl);
+                }, 500);
+            });
+        }
+
+        function downloadPDF(pdfBytes, filename) {
+            try {
+                const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+                const link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = filename;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            } catch (error) {
+                console.error("Error downloading PDF:", error);
+                alert("Error downloading certificate. Please allow pop-ups and try again.");
+            }
+        }
 
 
 
