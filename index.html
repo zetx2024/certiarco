@@ -392,7 +392,7 @@
     async function loadParticipantData() {
         try {
             $('#loading').show();
-            const response = await fetch('participants.json');
+            const response = await fetch('participant.json');
             participantData = await response.json();
             $('#loading').hide();
         } catch (error) {
