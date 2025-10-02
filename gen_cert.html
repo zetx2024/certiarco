@@ -93,12 +93,12 @@
             id: generateRandomId(),
             name: row.name, // Assuming the name column is 'name'
             school: row.school, // Assuming the school column is 'school'
-            program: "IARCO 2024",
-            batch: "1st",
+            program: "IARCO 2025",
+            batch: "2nd",
             image: "https://iarco.org/fevicon/android-chrome-192x192.png",
             role: row.role, // Dynamically set the role, default to "Junior" if undefined
-            date: "November 20, 2024",
-            years: "2024"
+            date: "September 30, 2025",
+            years: "2025"
           };
         });
 
@@ -115,9 +115,9 @@
 
     // Function to generate a random alphanumeric ID
     function generateRandomId() {
-      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789iarco25';
       let id = '';
-      for (let i = 0; i < 10; i++) {
+      for (let i = 0; i < 15; i++) {
         id += chars.charAt(Math.floor(Math.random() * chars.length));
       }
       return id;
