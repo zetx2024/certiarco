@@ -392,7 +392,7 @@
     async function loadParticipantData() {
         try {
             $('#loading').show();
-            const response = await fetch('participants.json');
+            const response = await fetch('participant.json');
             participantData = await response.json();
             $('#loading').hide();
         } catch (error) {
@@ -460,7 +460,7 @@
             firstPage.drawImage(qrImage, { x: 700, y: 400, width: 90, height: 90 });
 
             // Set PDF metadata
-                pdfDoc.setTitle(`Certificate | ${studentName} | ${school}`);
+                pdfDoc.setTitle(`Certificate | ${studentName} | ${years}`);
                 pdfDoc.setAuthor('Sanaul Haque');
                 pdfDoc.setSubject(`IARCO Participation Certificate`);
                 pdfDoc.setKeywords(['IARCO', 'certificate', 'research', 'competition']);
@@ -483,22 +483,97 @@
         }
     }
    function generateQRCodeAsync(text) {
-            return new Promise((resolve) => {
-                const qrElement = document.getElementById('qrcode');
+    return new Promise((resolve, reject) => {
+        const qrElement = document.getElementById('qrcode');
+        qrElement.innerHTML = '';
+
+        // Helper to read generated output (canvas or img)
+        function getDataUrl() {
+            const canvas = qrElement.querySelector('canvas');
+            const img = qrElement.querySelector('img');
+            if (canvas) return canvas.toDataURL('image/png');
+            if (img) return img.src;
+            return null;
+        }
+
+        // Try creating QR with a few fallbacks
+        try {
+            // Attempt with original (high correction) first to preserve robustness
+            new QRCode(qrElement, {
+                text: text,
+                width: 90,
+                height: 90,
+                correctLevel: QRCode.CorrectLevel.H
+            });
+
+            // allow small time for library to render
+            setTimeout(() => {
+                const dataUrl = getDataUrl();
+                if (dataUrl) return resolve(dataUrl);
+                // If no output, fall through to fallback attempts
+                fallbackToLarge();
+            }, 250);
+
+        } catch (err) {
+            // Overflow or other error — try fallback
+            console.warn('Initial QR generation failed, retrying with larger capacity...', err);
+            fallbackToLarge();
+        }
+
+        function fallbackToLarge() {
+            try {
+                // Use maximum version (typeNumber: 40) and lower error correction to increase capacity
                 qrElement.innerHTML = '';
                 new QRCode(qrElement, {
                     text: text,
                     width: 90,
                     height: 90,
-                    correctLevel: QRCode.CorrectLevel.H
+                    typeNumber: 40,
+                    correctLevel: QRCode.CorrectLevel.L
                 });
+
                 setTimeout(() => {
-                    const qrCanvas = qrElement.querySelector('canvas');
-                    const qrDataUrl = qrCanvas.toDataURL('image/png');
-                    resolve(qrDataUrl);
-                }, 500);
-            });
+                    const dataUrl = getDataUrl();
+                    if (dataUrl) return resolve(dataUrl);
+                    // If still no output, do final compact fallback
+                    compactFallback();
+                }, 250);
+
+            } catch (err2) {
+                console.warn('Large-version QR generation failed, using compact fallback...', err2);
+                compactFallback();
+            }
         }
+
+        function compactFallback() {
+            try {
+                // Try to extract ID and create a short verification URL as last-resort content
+                const idMatch = text.match(/ID:\s*([^\n\r]+)/i);
+                const fallbackText = idMatch ? `https://cert.iarco.org/verify?id=${encodeURIComponent(idMatch[1])}` : 'https://cert.iarco.org';
+
+                qrElement.innerHTML = '';
+                new QRCode(qrElement, {
+                    text: fallbackText,
+                    width: 90,
+                    height: 90,
+                    typeNumber: 40,
+                    correctLevel: QRCode.CorrectLevel.L
+                });
+
+                setTimeout(() => {
+                    const dataUrl = getDataUrl();
+                    if (dataUrl) return resolve(dataUrl);
+                    return reject(new Error('Failed to generate QR code (no output).'));
+                }, 250);
+
+            } catch (err3) {
+                console.error('Compact fallback also failed:', err3);
+                return reject(err3);
+            }
+        }
+    });
+}
+
 
         function downloadPDF(pdfBytes, filename) {
             try {
