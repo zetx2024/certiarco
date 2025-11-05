@@ -1,0 +1,34 @@
+{
+  "gold": {
+    "rank": 1,
+    "color": "#D4AF37",
+    "title": "Gold Medalist",
+    "icon": "🥇"
+  },
+  "silver": {
+    "rank": 2,
+    "color": "#C0C0C0",
+    "title": "Silver Medalist",
+    "icon": "🥈"
+  },
+  "bronze": {
+    "rank": 3,
+    "color": "#CD7F32",
+    "title": "Bronze Medalist",
+    "icon": "🥉"
+  },
+  "honorable": {
+    "minRank": 4,
+    "maxRank": 10,
+    "color": "#4CAF50",
+    "title": "Top 10 Honorable Mention",
+    "icon": "🏅"
+  },
+  "participant": {
+    "minRank": 11,
+    "maxRank": 999,
+    "color": "#808080",
+    "title": "Participant",
+    "icon": "🎓"
+  }
+}
