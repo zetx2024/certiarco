@@ -319,8 +319,8 @@
         async function loadAllData() {
             try {
                 const [studentsResp, flagsResp, certResp] = await Promise.all([
-                    fetch('https://iarco.org/data/finalist2024.json'),
-                    fetch('data/https://iarco.org/data/flag.json'),
+                    fetch('data/student.json'),
+                    fetch('data/flags.json'),
                     fetch('data/certificate.json')
                 ]);
                 
