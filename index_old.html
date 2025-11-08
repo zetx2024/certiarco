@@ -863,7 +863,7 @@
             // NEW: Dynamic font size adjustment for research title
             let titleFontSize = 15; // Base font size
             const maxWidth = s(600); // Maximum width for the title
-            const maxLines = 4; // Maximum number of lines allowed
+            const maxLines = 3; // Reduced from 4 to 3 to create more space for signature
             
             // Calculate the optimal font size
             titleFontSize = calculateOptimalFontSize(ctx, student.research_proposal_title, maxWidth, maxLines, titleFontSize);
@@ -879,15 +879,34 @@
                 ctx.fillText(line, s(397), s(600 + (index * 28), 'y') + logoSpace);
             });
             
-            // Calculate the bottom position of the title (fixed spacing)
+            // FIXED POSITIONS for rank link, medal, and signature area
+            // Calculate the bottom position of the title (for reference)
             const titleBottom = s(600 + (titleLines.length * 28), 'y') + logoSpace;
             
-            // Rank link with enough space after title - decreased font size by 1px
+            // Fixed position for rank link - always at the same position
+            const fixedRankLinkY = s(700, 'y') + logoSpace;
             ctx.font = `${s(10)}px 'Libre Baskerville', serif`;
-            ctx.fillText(`https://iarco.org/${student.year}-winners?category=${student.category}&rank=${student.rank}`, s(397), titleBottom + s(40, 'y'));
+            ctx.fillText(`https://iarco.org/${student.year}-winners?category=${student.category}&rank=${student.rank}`, s(397), fixedRankLinkY);
             
-            // Medal/badge area with rank info - even larger size
-            await drawRankMedal(ctx, canvas, student.rank, s(397), titleBottom + s(120, 'y'), s(110)); // Increased from s(90) to s(110)
+            // Fixed position for medal - always at the same position
+            const fixedMedalY = s(800, 'y') + logoSpace;
+            await drawRankMedal(ctx, canvas, student.rank, s(397), fixedMedalY, s(110));
+            
+            // FIXED POSITION for signature area - always at the same position
+            const fixedSignatureY = height - s(150, 'y');
+            
+            // Draw signature line and text
+            ctx.strokeStyle = '#0b0b0b';
+            ctx.lineWidth = s(1);
+            ctx.beginPath();
+            ctx.moveTo(s(597), fixedSignatureY);
+            ctx.lineTo(s(694), fixedSignatureY);
+            ctx.stroke();
+            
+            // Signature text
+            ctx.textAlign = 'right';
+            ctx.font = `${s(10)}px 'Libre Baskerville', serif`;
+            ctx.fillText("Chairperson, IARCO Jury Board", s(694), fixedSignatureY + s(20, 'y'));
             
             // FIXED POSITION for date and certificate ID
             // Always position these at a fixed distance from the bottom
