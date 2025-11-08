@@ -863,7 +863,7 @@
             // NEW: Dynamic font size adjustment for research title
             let titleFontSize = 15; // Base font size
             const maxWidth = s(600); // Maximum width for the title
-            const maxLines = 3; // Reduced from 4 to 3 to create more space for signature
+            const maxLines = 3; // Maximum number of lines allowed
             
             // Calculate the optimal font size
             titleFontSize = calculateOptimalFontSize(ctx, student.research_proposal_title, maxWidth, maxLines, titleFontSize);
@@ -879,23 +879,17 @@
                 ctx.fillText(line, s(397), s(600 + (index * 28), 'y') + logoSpace);
             });
             
-            // FIXED POSITIONS for rank link, medal, and signature area
             // Calculate the bottom position of the title (for reference)
             const titleBottom = s(600 + (titleLines.length * 28), 'y') + logoSpace;
             
-            // Fixed position for rank link - always at the same position
-            const fixedRankLinkY = s(700, 'y') + logoSpace;
+            // FIXED POSITION for rank link - just one line break after title
+            const fixedRankLinkY = titleBottom + s(30, 'y'); // Reduced from 40 to 30
             ctx.font = `${s(10)}px 'Libre Baskerville', serif`;
             ctx.fillText(`https://iarco.org/${student.year}-winners?category=${student.category}&rank=${student.rank}`, s(397), fixedRankLinkY);
             
-            // Fixed position for medal - always at the same position
-            const fixedMedalY = s(800, 'y') + logoSpace;
-            await drawRankMedal(ctx, canvas, student.rank, s(397), fixedMedalY, s(95));
-            
-            // FIXED POSITION for signature area - always at the same position
-            const fixedSignatureY = height - s(150, 'y');
-            
-            
+            // FIXED POSITION for medal - just one line break after rank link
+            const fixedMedalY = fixedRankLinkY + s(50, 'y'); // Reduced spacing
+            await drawRankMedal(ctx, canvas, student.rank, s(397), fixedMedalY, s(110));
             
             // FIXED POSITION for date and certificate ID
             // Always position these at a fixed distance from the bottom
