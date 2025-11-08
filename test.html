@@ -879,13 +879,16 @@
                 ctx.fillText(line, s(397), s(600 + (index * 28), 'y') + logoSpace);
             });
             
-            // FIXED POSITION for rank link - ALWAYS at the same position
-            const fixedRankLinkY = s(750, 'y') + logoSpace;
+            // Calculate the bottom position of the title (for reference)
+            const titleBottom = s(600 + (titleLines.length * 28), 'y') + logoSpace;
+            
+            // FIXED POSITION for rank link - just one line break after title
+            const fixedRankLinkY = titleBottom + s(40, 'y');
             ctx.font = `${s(10)}px 'Libre Baskerville', serif`;
             ctx.fillText(`https://iarco.org/${student.year}-winners?category=${student.category}&rank=${student.rank}`, s(397), fixedRankLinkY);
             
-            // FIXED POSITION for medal - ALWAYS at the same position
-            const fixedMedalY = s(850, 'y') + logoSpace;
+            // FIXED POSITION for medal - exactly one line below rank link
+            const fixedMedalY = fixedRankLinkY + s(40, 'y');
             await drawRankMedal(ctx, canvas, student.rank, s(397), fixedMedalY, s(110));
             
             // FIXED POSITION for date and certificate ID
