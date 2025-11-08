@@ -351,10 +351,10 @@
         function createMedalSVGs() {
             medals = {
                 "gold": createMedalSVG('#FFD700', '#D4AF37'),
-                "silver": createMedalSVG('#C0C0C0', '#A0A0A0'),
-                "bronze": createMedalSVG('#CD7F32', '#8B4513'),
-                "honorable": createMedalSVG('#1a5276', '#0d2b42'),
-                "finalist": createMedalSVG('#7d3c98', '#5b2c6f')
+                "silver": createMedalSVG('#C0C0C0', '#a89bc9'),
+                "bronze": createMedalSVG('#CD7F32', '#a89bc9'),
+                "honorable": createMedalSVG('#87e094', '#a89bc9'),
+                "finalist": createMedalSVG('#cee6b3', '#a89bc9')
             };
         }
 
@@ -484,7 +484,7 @@
             
             certificateTemplates = {
                 "2024": "certificatef/2024.pdf",
-                "2025": "certificatef/2024.pdf"
+                "2025": "certificatef/2025.pdf"
             };
             
             // Preload flag images
@@ -605,7 +605,7 @@
                     <p><strong>Year:</strong> ${student.year}</p>
                     <p><strong>Country:</strong> <span class="flag">${flagSvg}</span> ${student.country}</p>
                     <p><strong>Research Title:</strong> ${student.research_proposal_title}</p>
-                    <p><strong>Plagiarism Similarity:</strong> ${student.research_paper.plagiarism_check_percentile}%/20%</p>
+                    <p><strong>Plagiarism Similarity:</strong> ${student.research_paper.plagiarism_check_percentile}%</p>
                     <p><strong>Rank:</strong> ${student.rank} out of ${student.totalCountCategory}</p>
                     <p><strong>Final Score:</strong> ${student.scaledFinalScore}/200</p>
                     
