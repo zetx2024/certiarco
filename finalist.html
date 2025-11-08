@@ -1,6 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-C5LLP0WEBK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-C5LLP0WEBK');
+</script>
+
+<!-- End Google Tag Manager -->
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IARCO Finalist Certificate</title>
@@ -8,7 +21,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Great+Vibes&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
-        /* Your existing CSS with responsive additions */
         :root {
             --primary-color: #0b0b0b;
             --secondary-color: #2b2b2b;
@@ -29,7 +41,7 @@
             background-color: #f9f9f9;
             color: var(--primary-color);
             line-height: 1.6;
-            font-size: 15px; /* Decreased by 1px from default */
+            font-size: 15px;
         }
         
         .container {
@@ -78,11 +90,11 @@
             margin-bottom: 20px;
             text-align: center;
             font-family: 'Playfair Display', serif;
-            font-size: 1.6rem; /* Decreased by 1px */
+            font-size: 1.6rem;
         }
         
         h2 {
-            font-size: 1.1rem; /* Decreased by 1px */
+            font-size: 1.1rem;
             margin-bottom: 15px;
             color: var(--secondary-color);
             border-bottom: 1px solid #eee;
@@ -96,7 +108,7 @@
             border-radius: var(--border-radius);
             margin-bottom: 15px;
             font-family: inherit;
-            font-size: 0.95rem; /* Decreased by 1px */
+            font-size: 0.95rem;
         }
         
         .search-results {
@@ -111,7 +123,7 @@
             border-bottom: 1px solid #eee;
             cursor: pointer;
             transition: background-color 0.2s;
-            font-size: 0.95rem; /* Decreased by 1px */
+            font-size: 0.95rem;
         }
         
         .result-item:hover {
@@ -129,7 +141,7 @@
         
         .student-info p {
             margin-bottom: 8px;
-            font-size: 0.95rem; /* Decreased by 1px */
+            font-size: 0.95rem;
         }
         
         .flag {
@@ -154,7 +166,7 @@
             background-color: var(--accent-color);
             color: white;
             font-family: inherit;
-            font-size: 0.95rem; /* Decreased by 1px */
+            font-size: 0.95rem;
             cursor: pointer;
             transition: background-color 0.3s;
             flex: 1;
@@ -210,7 +222,7 @@
         }
         
         .certificate-id {
-            font-size: 0.85rem; /* Decreased by 1px */
+            font-size: 0.85rem;
             color: #666;
             margin-top: 10px;
         }
@@ -225,7 +237,6 @@
             100% { transform: scale(1); }
         }
 
-        /* Responsive design for small devices */
         @media (max-width: 768px) {
             .container {
                 flex-direction: column;
@@ -252,6 +263,24 @@
             .preview-container {
                 padding: 10px;
             }
+        }
+
+        .developer-info {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: #343a40;
+        }
+
+        .developer-info a {
+            color: #003366;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .developer-info a:hover {
+            color: #0749b3;
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -295,6 +324,11 @@
                     <p>Generating certificate...</p>
                 </div>
             </div>
+        </div>
+
+        <div class="developer-info">
+            <p>Developed by <a href="https://md-sanaul-haque-shanto.github.io">Md Sanaul Haque Shanto</a>.</p>
+            <p style="font-size: 0.8rem;">Any Error, Suggestions, Design, Mail me at <a href="mailto:shanto@eptonline.org">shanto@eptonline.org</a></p>
         </div>
     </div>
 
@@ -350,11 +384,11 @@
         // Create medal SVGs programmatically - with even larger size
         function createMedalSVGs() {
             medals = {
-                "gold": createMedalSVG('#FFD700', '#D4AF37'),
-                "silver": createMedalSVG('#C0C0C0', '#a89bc9'),
-                "bronze": createMedalSVG('#CD7F32', '#a89bc9'),
-                "honorable": createMedalSVG('#87e094', '#a89bc9'),
-                "finalist": createMedalSVG('#cee6b3', '#a89bc9')
+                "gold": createMedalSVG('#FFD700', '#240670'),
+                "silver": createMedalSVG('#C0C0C0', '#240670'),
+                "bronze": createMedalSVG('#CD7F32', '#240670'),
+                "honorable": createMedalSVG('#45a352', '#240670'),
+                "finalist": createMedalSVG('#b4c9f0', '#240670')
             };
         }
 
@@ -606,7 +640,7 @@
                     <p><strong>Country:</strong> <span class="flag">${flagSvg}</span> ${student.country}</p>
                     <p><strong>Research Title:</strong> ${student.research_proposal_title}</p>
                     <p><strong>Plagiarism Similarity:</strong> ${student.research_paper.plagiarism_check_percentile}%</p>
-                    <p><strong>Rank:</strong> ${student.rank} out of ${student.totalCountCategory}</p>
+                    <p><strong>Rank:</strong> ${student.rank} out of ${student.totalCountCategory} Top Selected Finalist</p>
                     <p><strong>Final Score:</strong> ${student.scaledFinalScore}/200</p>
                     
                 </div>
@@ -787,7 +821,7 @@
             
             // Achievement text - decreased font size by 1px
             ctx.font = `${s(12)}px 'Libre Baskerville', serif`;
-            const achievementText = `Top Selected Finalist delivering an impressive research project and presentation, and achieved`;
+            const achievementText = `delivering an impressive research project and presentation, and achieved`;
             ctx.fillText(achievementText, s(397), s(450, 'y') + logoSpace);
             
             // Rank and score with numbers bold and italic - FIXED VERSION
@@ -795,10 +829,9 @@
             const rankNum = `${student.rank}`;
             const ordinalSuffix = getOrdinalSuffix(student.rank);
             const totalNum = `${student.totalCountCategory}`;
-            const totalOrdinal = getOrdinalSuffix(student.totalCountCategory);
             const scoreNum = `${student.scaledFinalScore}`;
             
-            const rankText = `${rankNum}${ordinalSuffix} place out of ${totalNum}${totalOrdinal} in the ${student.category} Category with a score of ${scoreNum} out of 200`;
+            const rankText = `${rankNum}${ordinalSuffix} place out of ${totalNum} Top Selected Finalist in the ${student.category} Category with a score of ${scoreNum} out of 200`;
             
             // Calculate the starting position for the text
             const totalWidth = ctx.measureText(rankText).width;
@@ -832,7 +865,7 @@
             
             // Part 4: after total number
             ctx.font = `${s(12)}px 'Libre Baskerville', serif`;
-            const part4 = `${totalOrdinal} in the ${student.category} Category with a score of `;
+            const part4 = ` Top Selected Finalist in the ${student.category} Category with a score of `;
             const part4Width = ctx.measureText(part4).width;
             ctx.fillText(part4, currentX + part4Width/2, s(480, 'y') + logoSpace);
             currentX += part4Width;
@@ -853,27 +886,43 @@
             // Score breakdown with percentiles - decreased font size by 1px
             const researchPercentile = `${student.plagiarism_check_percentile}` || 0;
             const plagiarismPercentile = student.research_paper.plagiarism_check_percentile;
-            const breakdownText = `(Research Proposal: ${student.researchPaperScore}/100 | Presentation: ${student.presentationScore}/100 | Similarity: ${plagiarismPercentile}% | P: ${student.plagiarismPenalty})`;
+            const breakdownText = `(Research Proposal: ${student.researchPaperScore}/100 | Presentation: ${student.presentationScore}/100 | Similarity: ${plagiarismPercentile}% | Penalty: ${student.plagiarismPenalty})`;
             ctx.fillText(breakdownText, s(397), s(510, 'y') + logoSpace);
             
             // Research Title with label - decreased font size by 1px
-            ctx.font = `700 ${s(16)}px 'Libre Baskerville', serif`;
+            ctx.font = `700 ${s(15)}px 'Libre Baskerville', serif`;
             ctx.fillText("Research Title:", s(397), s(570, 'y') + logoSpace);
             
-            // Wrap long titles with enough space - decreased font size by 1px
-            ctx.font = `${s(15)}px 'Libre Baskerville', serif`;
-            const titleLines = wrapText(ctx, student.research_proposal_title, s(600));
+            // NEW: Dynamic font size adjustment for research title
+            let titleFontSize = 13; // Base font size
+            const maxWidth = s(620); // Maximum width for the title
+            const maxLines = 4; // Maximum number of lines allowed
+            
+            // Calculate the optimal font size
+            titleFontSize = calculateOptimalFontSize(ctx, student.research_proposal_title, maxWidth, maxLines, titleFontSize);
+            
+            // Set the dynamically adjusted font size
+            ctx.font = `${s(titleFontSize)}px 'Libre Baskerville', serif`;
+            
+            // Wrap the title with the adjusted font size
+            const titleLines = wrapText(ctx, student.research_proposal_title, maxWidth);
+            
+            // Draw the title lines
             titleLines.forEach((line, index) => {
                 ctx.fillText(line, s(397), s(600 + (index * 28), 'y') + logoSpace);
             });
             
-            // Rank link with enough space after title - decreased font size by 1px
+            // Calculate the bottom position of the title (for reference)
             const titleBottom = s(600 + (titleLines.length * 28), 'y') + logoSpace;
-            ctx.font = `${s(10)}px 'Libre Baskerville', serif`;
-            ctx.fillText(`https://iarco.org/${student.year}-winners?category=${student.category}&rank=${student.rank}`, s(397), titleBottom + s(40, 'y'));
             
-            // Medal/badge area with rank info - even larger size
-            await drawRankMedal(ctx, canvas, student.rank, s(397), titleBottom + s(120, 'y'), s(110)); // Increased from s(90) to s(110)
+            // FIXED POSITION for rank link - just one line break after title
+            const fixedRankLinkY = titleBottom + s(40, 'y');
+            ctx.font = `${s(10)}px 'Libre Baskerville', serif`;
+            ctx.fillText(`https://iarco.org/${student.year}-winners?category=${student.category}&rank=${student.rank}`, s(397), fixedRankLinkY);
+            
+            // FIXED POSITION for medal - exactly two lines below rank link
+            const fixedMedalY = fixedRankLinkY + s(60, 'y'); // Changed from 40 to 60 for two lines
+            await drawRankMedal(ctx, canvas, student.rank, s(397), fixedMedalY, s(110));
             
             // FIXED POSITION for date and certificate ID
             // Always position these at a fixed distance from the bottom
@@ -882,13 +931,34 @@
             // Date at bottom left
             ctx.textAlign = 'left';
             ctx.font = `${s(9)}px 'Libre Baskerville', serif`;
-            ctx.fillText("November 15, "+`${student.year}`, s(100), fixedBottomY);
+            ctx.fillText("November 10, "+`${student.year}`, s(100), fixedBottomY);
             
             // Certificate ID at bottom right (using student_id)
             ctx.textAlign = 'right';
             ctx.font = `${s(9)}px 'Libre Baskerville', serif`;
             ctx.fillStyle = '#666666';
             ctx.fillText(`Certificate ID: ${student.student_id}`, s(694), fixedBottomY);
+        }
+
+        // NEW FUNCTION: Calculate optimal font size for research title
+        function calculateOptimalFontSize(ctx, text, maxWidth, maxLines, baseFontSize) {
+            let fontSize = baseFontSize;
+            let minFontSize = 9; // Minimum font size allowed
+            
+            // Keep reducing font size until text fits within maxLines
+            while (fontSize > minFontSize) {
+                ctx.font = `${fontSize}px 'Libre Baskerville', serif`;
+                const lines = wrapText(ctx, text, maxWidth);
+                
+                if (lines.length <= maxLines) {
+                    break; // Text fits within maxLines, use current font size
+                }
+                
+                fontSize -= 0.6; // Reduce font size by 0.5px
+            }
+            
+            // Ensure we don't go below minimum font size
+            return Math.max(fontSize, minFontSize);
         }
 
         // Draw flag from SVG string
@@ -1078,7 +1148,7 @@
                     return Math.floor(1000 + Math.random() * 9000); // Generates 4-digit random number
                 }
                 // Calculate dimensions to fit A4
-                const imgWidth = 210; // A4 width in mm
+                const imgWidth = 210.1; // A4 width in mm
                 const imgHeight = (canvas.height * imgWidth) / canvas.width;
                 
                 // Add canvas image to PDF
