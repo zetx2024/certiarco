@@ -348,11 +348,11 @@
         // Create medal SVGs programmatically - with even larger size
         function createMedalSVGs() {
             medals = {
-                "gold": createMedalSVG('#FFD700', '#D4AF37'),
-                "silver": createMedalSVG('#C0C0C0', '#a89bc9'),
-                "bronze": createMedalSVG('#CD7F32', '#a89bc9'),
-                "honorable": createMedalSVG('#87e094', '#a89bc9'),
-                "finalist": createMedalSVG('#cee6b3', '#a89bc9')
+                "gold": createMedalSVG('#FFD700', '#240670'),
+                "silver": createMedalSVG('#C0C0C0', '#240670'),
+                "bronze": createMedalSVG('#CD7F32', '#240670'),
+                "honorable": createMedalSVG('#45a352', '#240670'),
+                "finalist": createMedalSVG('#b4c9f0', '#240670')
             };
         }
 
@@ -785,7 +785,7 @@
             
             // Achievement text - decreased font size by 1px
             ctx.font = `${s(12)}px 'Libre Baskerville', serif`;
-            const achievementText = `Top Selected Finalist delivering an impressive research project and presentation, and achieved`;
+            const achievementText = `delivering an impressive research project and presentation, and achieved`;
             ctx.fillText(achievementText, s(397), s(450, 'y') + logoSpace);
             
             // Rank and score with numbers bold and italic - FIXED VERSION
@@ -850,7 +850,7 @@
             // Score breakdown with percentiles - decreased font size by 1px
             const researchPercentile = `${student.plagiarism_check_percentile}` || 0;
             const plagiarismPercentile = student.research_paper.plagiarism_check_percentile;
-            const breakdownText = `(Research Proposal: ${student.researchPaperScore}/100 | Presentation: ${student.presentationScore}/100 | Similarity: ${plagiarismPercentile}% | P: ${student.plagiarismPenalty})`;
+            const breakdownText = `(Research Proposal: ${student.researchPaperScore}/100 | Presentation: ${student.presentationScore}/100 | Similarity: ${plagiarismPercentile}% | Penalty: ${student.plagiarismPenalty})`;
             ctx.fillText(breakdownText, s(397), s(510, 'y') + logoSpace);
             
             // Research Title with label - decreased font size by 1px
