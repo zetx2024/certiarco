@@ -855,13 +855,13 @@
             ctx.fillText(breakdownText, s(397), s(510, 'y') + logoSpace);
             
             // Research Title with label - decreased font size by 1px
-            ctx.font = `700 ${s(16)}px 'Libre Baskerville', serif`;
+            ctx.font = `700 ${s(15)}px 'Libre Baskerville', serif`;
             ctx.fillText("Research Title:", s(397), s(570, 'y') + logoSpace);
             
             // NEW: Dynamic font size adjustment for research title
-            let titleFontSize = 15; // Base font size
-            const maxWidth = s(600); // Maximum width for the title
-            const maxLines = 3; // Maximum number of lines allowed
+            let titleFontSize = 13; // Base font size
+            const maxWidth = s(620); // Maximum width for the title
+            const maxLines = 4; // Maximum number of lines allowed
             
             // Calculate the optimal font size
             titleFontSize = calculateOptimalFontSize(ctx, student.research_proposal_title, maxWidth, maxLines, titleFontSize);
@@ -896,7 +896,7 @@
             // Date at bottom left
             ctx.textAlign = 'left';
             ctx.font = `${s(9)}px 'Libre Baskerville', serif`;
-            ctx.fillText("November 15, "+`${student.year}`, s(100), fixedBottomY);
+            ctx.fillText("November 10, "+`${student.year}`, s(100), fixedBottomY);
             
             // Certificate ID at bottom right (using student_id)
             ctx.textAlign = 'right';
@@ -908,7 +908,7 @@
         // NEW FUNCTION: Calculate optimal font size for research title
         function calculateOptimalFontSize(ctx, text, maxWidth, maxLines, baseFontSize) {
             let fontSize = baseFontSize;
-            let minFontSize = 10; // Minimum font size allowed
+            let minFontSize = 9; // Minimum font size allowed
             
             // Keep reducing font size until text fits within maxLines
             while (fontSize > minFontSize) {
@@ -919,7 +919,7 @@
                     break; // Text fits within maxLines, use current font size
                 }
                 
-                fontSize -= 0.5; // Reduce font size by 0.5px
+                fontSize -= 0.6; // Reduce font size by 0.5px
             }
             
             // Ensure we don't go below minimum font size
@@ -1113,7 +1113,7 @@
                     return Math.floor(1000 + Math.random() * 9000); // Generates 4-digit random number
                 }
                 // Calculate dimensions to fit A4
-                const imgWidth = 210; // A4 width in mm
+                const imgWidth = 210.1; // A4 width in mm
                 const imgHeight = (canvas.height * imgWidth) / canvas.width;
                 
                 // Add canvas image to PDF
