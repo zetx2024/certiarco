@@ -223,7 +223,7 @@
             50% { transform: scale(0.95); box-shadow: 0 0 20px rgba(26, 82, 118, 0.5); }
             100% { transform: scale(1); }
         }
-        
+
         @media (max-width: 768px) {
             .container {
                 flex-direction: column;
@@ -326,7 +326,7 @@
                 flags = await flagsResp.json();
                 certificateTemplates = await certResp.json();
                 
-                // Create medal SVGs programmatically
+                // Create medal SVGs programmatically instead of loading from files
                 createMedalSVGs();
                 
                 // Preload flag images
@@ -345,7 +345,7 @@
             }
         }
 
-        // Create medal SVGs programmatically
+        // Create medal SVGs programmatically - with even larger size
         function createMedalSVGs() {
             medals = {
                 "gold": createMedalSVG('#FFD700', '#D4AF37'),
@@ -356,14 +356,23 @@
             };
         }
 
-        // Create a medal SVG with given colors
+        // Create a medal SVG with given colors - even larger size
         function createMedalSVG(primaryColor, secondaryColor) {
             return `
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140">
+                    <!-- Medal ribbon -->
                     <path d="M35,18 L105,18 L95,47 L45,47 Z" fill="${secondaryColor}" opacity="0.8"/>
+                    
+                    <!-- Medal body -->
                     <circle cx="70" cy="82" r="50" fill="${primaryColor}" stroke="${secondaryColor}" stroke-width="5"/>
+                    
+                    <!-- Inner circle -->
                     <circle cx="70" cy="82" r="35" fill="${secondaryColor}" opacity="0.2"/>
+                    
+                    <!-- Decorative ring -->
                     <circle cx="70" cy="82" r="40" fill="none" stroke="${secondaryColor}" stroke-width="2.5" opacity="0.7"/>
+                    
+                    <!-- Top loop for ribbon -->
                     <path d="M58,18 L82,18 L78,35 L62,35 Z" fill="${secondaryColor}"/>
                 </svg>
             `;
@@ -375,7 +384,7 @@
                 return new Promise((resolve) => {
                     const img = new Image();
                     img.onload = resolve;
-                    img.onerror = resolve; // Resolve even if error
+                    img.onerror = resolve; // Resolve even if error to not block loading
                     const svgBlob = new Blob([flags[country]], {type: 'image/svg+xml;charset=utf-8'});
                     img.src = URL.createObjectURL(svgBlob);
                 });
@@ -468,6 +477,7 @@
                 "United States": "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 12'><rect width='20' height='12' fill='#b22234'/><path fill='#3c3b6e' d='M0 0h20v7H0z'/><path fill='#fff' d='M0 0h20v1H0zm0 2h20v1H0zm0 2h20v1H0zm0 2h20v1H0z'/><path fill='#fff' d='M0 0h8.3v7H0z'/><g fill='#fff'><path d='M1.3 1h1.3v1H1.3zm1.3 2h1.3v1H2.6zm1.3-2h1.3v1H3.9zm1.3 2h1.3v1H5.2zm1.3-2h1.3v1H6.5zm0 2h1.3v1H6.5zM1.3 3h1.3v1H1.3zm2.6 0h1.3v1H3.9zM1.3 5h1.3v1H1.3zm2.6 0h1.3v1H3.9z'/></g></svg>"
             };
             
+            // Create medal SVGs programmatically instead of loading from files
             createMedalSVGs();
             
             certificateTemplates = {
@@ -475,7 +485,10 @@
                 "2025": "certificatef/2025.pdf"
             };
             
+            // Preload flag images
             await preloadFlagImages();
+            
+            // Compute ranks for all students
             computeRanksPerYearCategory(students);
         }
 
@@ -537,7 +550,7 @@
 
         // Search students by name (word-by-word)
         function searchStudentsByName(students, query) {
-            const tokens = query.trim().toLowerCase().split(/\\s+/).filter(Boolean);
+            const tokens = query.trim().toLowerCase().split(/\s+/).filter(Boolean);
             if (!tokens.length) return [];
             return students.filter(s => {
                 const name = s.name.toLowerCase();
@@ -583,7 +596,7 @@
             
             selectedStudentDiv.innerHTML = `
                 <div class="student-info">
-                    <p><strong>Certificate ID: </strong> ${student.student_id}</p>
+                     <p><strong>Certificate ID: </strong> ${student.student_id}</p>
                     <p><strong>Name:</strong> ${student.name}</p>
                     <p><strong>School:</strong> ${student.school}</p>
                     <p><strong>Category:</strong> ${student.category}</p>
@@ -591,8 +604,9 @@
                     <p><strong>Country:</strong> <span class="flag">${flagSvg}</span> ${student.country}</p>
                     <p><strong>Research Title:</strong> ${student.research_proposal_title}</p>
                     <p><strong>Plagiarism Similarity:</strong> ${student.research_paper.plagiarism_check_percentile}%</p>
-                    <p><strong>Rank:</strong> ${student.rank} out of ${student.totalCountCategory}</p>
+                    <p><strong>Rank:</strong> ${student.rank} out of ${student.totalCountCategory} Top Selected Finalist</p>
                     <p><strong>Final Score:</strong> ${student.scaledFinalScore}/200</p>
+                    
                 </div>
             `;
             
@@ -628,20 +642,24 @@
             }
             
             try {
-                // Set canvas size - A4 dimensions
+                // Set canvas size - A4 dimensions at 96 DPI for web
                 if (isForPDF) {
+                    // High resolution for PDF (300 DPI)
                     canvas.width = 2480;
                     canvas.height = 3508;
                 } else {
+                    // Standard resolution for preview
                     canvas.width = 794; // A4 width at 96 DPI
-                    canvas.height = 1123;
+                    canvas.height = 1123; // A4 height at 96 DPI
                 }
                 
                 // Clear canvas
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 
-                // Background template
+                // Get certificate template path
                 const templatePath = certificateTemplates[student.year] || certificateTemplates['2024'];
+                
+                // Try to draw PDF background, fallback to simple background if fails
                 try {
                     await drawPDFBackground(ctx, canvas, templatePath);
                 } catch (error) {
@@ -654,9 +672,11 @@
                 
             } catch (error) {
                 console.error('Error rendering certificate:', error);
+                // Fallback: draw a simple certificate background
                 drawFallbackBackground(ctx, canvas);
                 await drawCertificateContent(ctx, canvas, student, isForPDF);
             } finally {
+                // Hide loading indicator
                 if (!isForPDF) {
                     document.getElementById('loadingIndicator').style.display = 'none';
                 }
@@ -669,8 +689,15 @@
                 pdfjsLib.getDocument(pdfPath).promise.then(pdf => {
                     pdf.getPage(1).then(page => {
                         const viewport = page.getViewport({ scale: canvas.width / page.getViewport({ scale: 1 }).width });
-                        const renderContext = { canvasContext: ctx, viewport };
-                        page.render(renderContext).promise.then(resolve).catch(reject);
+                        
+                        const renderContext = {
+                            canvasContext: ctx,
+                            viewport: viewport
+                        };
+                        
+                        page.render(renderContext).promise.then(() => {
+                            resolve();
+                        }).catch(reject);
                     }).catch(reject);
                 }).catch(reject);
             });
@@ -678,11 +705,16 @@
 
         // Draw fallback background (if PDF loading fails)
         function drawFallbackBackground(ctx, canvas) {
+            // Draw a simple certificate-like background
             ctx.fillStyle = '#fefefe';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Add a border
             ctx.strokeStyle = '#d4af37';
             ctx.lineWidth = 15;
             ctx.strokeRect(50, 50, canvas.width - 100, canvas.height - 100);
+            
+            // Add a decorative element
             ctx.fillStyle = '#f5f5f5';
             ctx.fillRect(100, 100, canvas.width - 200, canvas.height - 200);
         }
@@ -691,33 +723,39 @@
         async function drawCertificateContent(ctx, canvas, student, isForPDF) {
             const width = canvas.width;
             const height = canvas.height;
+            
+            // Scale factor for text positioning
             const scaleX = width / 794;
             const scaleY = height / 1123;
+            
+            // Helper function to scale values
             const s = (val, axis = 'x') => axis === 'x' ? val * scaleX : val * scaleY;
+            
+            // Set text styles
             ctx.textAlign = 'center';
             ctx.fillStyle = '#0b0b0b';
-
-            // Space for logo
+            
+            // Add space for logo at top (approx 100px)
             const logoSpace = s(100, 'y');
-
-            // Title "CERTIFICATE"
+            
+            // Title "CERTIFICATE" - decreased font size by 1px
             ctx.font = `700 ${s(64)}px 'Playfair Display', serif`;
             ctx.fillText("CERTIFICATE", s(397), s(100, 'y') + logoSpace);
-
-            // Subtitle
+            
+            // Subtitle - decreased font size by 1px
             ctx.font = `${s(16)}px 'Libre Baskerville', serif`;
             ctx.letterSpacing = `${s(2)}px`;
-            ctx.fillText("Of International Academic Research Competition " + `${student.year}`, s(397), s(150, 'y') + logoSpace);
+            ctx.fillText("Of International Academic Research Competition "+`${student.year}`, s(397), s(150, 'y') + logoSpace);
             ctx.letterSpacing = '0px';
-
-            // "Awarded to"
+            
+            // "Awarded to" - decreased font size by 1px
             ctx.font = `italic ${s(14)}px 'Libre Baskerville', serif`;
             ctx.fillText("Awarded to", s(397), s(200, 'y') + logoSpace);
-
-            // Student name
+            
+            // Student name - decreased font size by 1px
             ctx.font = `${s(54)}px 'Great Vibes', cursive`;
             ctx.fillText(student.name, s(397), s(260, 'y') + logoSpace);
-
+            
             // Decorative line
             ctx.strokeStyle = '#0b0b0b';
             ctx.lineWidth = s(1);
@@ -725,133 +763,176 @@
             ctx.moveTo(s(297), s(300, 'y') + logoSpace);
             ctx.lineTo(s(497), s(300, 'y') + logoSpace);
             ctx.stroke();
-
-            // Student details
+            
+            // Student details - decreased font size by 1px
             ctx.font = `${s(14)}px 'Libre Baskerville', serif`;
             ctx.fillText("Of", s(397), s(340, 'y') + logoSpace);
             const classLevel = student.classLevel || "Student";
             ctx.fillText(`${classLevel} at ${student.school},`, s(397), s(370, 'y') + logoSpace);
-
-            // Country with flag
+            
+            // Country with flag - flag after country name
             const countryText = student.country;
             const countryTextWidth = ctx.measureText(countryText).width;
             ctx.fillText(countryText, s(397), s(400, 'y') + logoSpace);
+            
+            // Draw flag SVG after country name
             const flagSvg = flags[student.country];
             if (flagSvg) {
                 const flagX = s(397) + countryTextWidth/2 + s(10);
                 const flagY = s(400, 'y') + logoSpace - s(8);
                 await drawFlagFromSVG(ctx, flagSvg, flagX, flagY, s(20), s(12));
             }
-
-            // Achievement text
+            
+            // Achievement text - decreased font size by 1px
             ctx.font = `${s(12)}px 'Libre Baskerville', serif`;
             const achievementText = `Top Selected Finalist delivering an impressive research project and presentation, and achieved`;
             ctx.fillText(achievementText, s(397), s(450, 'y') + logoSpace);
-
-            // Rank and score with bold numbers
+            
+            // Rank and score with numbers bold and italic - FIXED VERSION
+            // First, let's create the full text and measure it
             const rankNum = `${student.rank}`;
             const ordinalSuffix = getOrdinalSuffix(student.rank);
             const totalNum = `${student.totalCountCategory}`;
-            const totalOrdinal = getOrdinalSuffix(student.totalCountCategory);
             const scoreNum = `${student.scaledFinalScore}`;
-            const rankText = `${rankNum}${ordinalSuffix} place out of ${totalNum}${totalOrdinal} in the ${student.category} Category with a score of ${scoreNum} out of 200`;
+            
+            const rankText = `${rankNum}${ordinalSuffix} place out of ${totalNum} Top Selected Finalist in the ${student.category} Category with a score of ${scoreNum} out of 200`;
+            
+            // Calculate the starting position for the text
             const totalWidth = ctx.measureText(rankText).width;
             const startX = s(397) - totalWidth/2;
+            
+            // Draw the text in parts
             let currentX = startX;
+            
+            // Part 1: before the first number
             const part1 = `${rankNum}`;
             const part1Width = ctx.measureText(part1).width;
+            
+            // Draw the first number with bold and italic
             ctx.font = `italic bold ${s(12)}px 'Libre Baskerville', serif`;
             ctx.fillText(rankNum, currentX + part1Width/2, s(480, 'y') + logoSpace);
             currentX += part1Width;
+            
+            // Part 2: ordinal suffix
             ctx.font = `${s(12)}px 'Libre Baskerville', serif`;
             const part2 = `${ordinalSuffix} place out of `;
             const part2Width = ctx.measureText(part2).width;
             ctx.fillText(part2, currentX + part2Width/2, s(480, 'y') + logoSpace);
             currentX += part2Width;
+            
+            // Part 3: total number
             ctx.font = `italic bold ${s(12)}px 'Libre Baskerville', serif`;
             const part3 = `${totalNum}`;
             const part3Width = ctx.measureText(part3).width;
             ctx.fillText(part3, currentX + part3Width/2, s(480, 'y') + logoSpace);
             currentX += part3Width;
+            
+            // Part 4: after total number
             ctx.font = `${s(12)}px 'Libre Baskerville', serif`;
-            const part4 = `${totalOrdinal} in the ${student.category} Category with a score of `;
+            const part4 = ` Top Selected Finalist in the ${student.category} Category with a score of `;
             const part4Width = ctx.measureText(part4).width;
             ctx.fillText(part4, currentX + part4Width/2, s(480, 'y') + logoSpace);
             currentX += part4Width;
+            
+            // Part 5: score number
             ctx.font = `italic bold ${s(12)}px 'Libre Baskerville', serif`;
             const part5 = `${scoreNum}`;
             const part5Width = ctx.measureText(part5).width;
             ctx.fillText(part5, currentX + part5Width/2, s(480, 'y') + logoSpace);
             currentX += part5Width;
+            
+            // Part 6: " out of 200"
             ctx.font = `${s(12)}px 'Libre Baskerville', serif`;
             const part6 = " out of 200";
             const part6Width = ctx.measureText(part6).width;
             ctx.fillText(part6, currentX + part6Width/2, s(480, 'y') + logoSpace);
-
-            // Score breakdown with percentiles
+            
+            // Score breakdown with percentiles - decreased font size by 1px
+            const researchPercentile = `${student.plagiarism_check_percentile}` || 0;
             const plagiarismPercentile = student.research_paper.plagiarism_check_percentile;
             const breakdownText = `(Research Proposal: ${student.researchPaperScore}/100 | Presentation: ${student.presentationScore}/100 | Similarity: ${plagiarismPercentile}% | P: ${student.plagiarismPenalty})`;
             ctx.fillText(breakdownText, s(397), s(510, 'y') + logoSpace);
-
-            // Research Title label
-            ctx.font = `700 ${s(16)}px 'Libre Baskerville', serif`;
+            
+            // Research Title with label - decreased font size by 1px
+            ctx.font = `700 ${s(15)}px 'Libre Baskerville', serif`;
             ctx.fillText("Research Title:", s(397), s(570, 'y') + logoSpace);
-
-            // Dynamic font size for research title content
-            let titleFontSize2 = 15;
-            const maxWidth2 = s(600);
-            const maxLines2 = 4;
-            titleFontSize2 = calculateOptimalFontSize(ctx, student.research_proposal_title, maxWidth2, maxLines2, titleFontSize2);
-            ctx.font = `${s(titleFontSize2)}px 'Libre Baskerville', serif`;
-            const titleLines2 = wrapText(ctx, student.research_proposal_title, maxWidth2);
-            titleLines2.forEach((line, index) => {
+            
+            // NEW: Dynamic font size adjustment for research title
+            let titleFontSize = 13; // Base font size
+            const maxWidth = s(620); // Maximum width for the title
+            const maxLines = 4; // Maximum number of lines allowed
+            
+            // Calculate the optimal font size
+            titleFontSize = calculateOptimalFontSize(ctx, student.research_proposal_title, maxWidth, maxLines, titleFontSize);
+            
+            // Set the dynamically adjusted font size
+            ctx.font = `${s(titleFontSize)}px 'Libre Baskerville', serif`;
+            
+            // Wrap the title with the adjusted font size
+            const titleLines = wrapText(ctx, student.research_proposal_title, maxWidth);
+            
+            // Draw the title lines
+            titleLines.forEach((line, index) => {
                 ctx.fillText(line, s(397), s(600 + (index * 28), 'y') + logoSpace);
             });
-            const titleBottom = s(600 + (titleLines2.length * 28), 'y') + logoSpace;
-
-            // Fixed position for rank link (two lines below title)
-            const fixedRankLinkY = titleBottom + s(80, 'y');
+            
+            // Calculate the bottom position of the title (for reference)
+            const titleBottom = s(600 + (titleLines.length * 28), 'y') + logoSpace;
+            
+            // FIXED POSITION for rank link - just one line break after title
+            const fixedRankLinkY = titleBottom + s(40, 'y');
             ctx.font = `${s(10)}px 'Libre Baskerville', serif`;
             ctx.fillText(`https://iarco.org/${student.year}-winners?category=${student.category}&rank=${student.rank}`, s(397), fixedRankLinkY);
-
-            // Fixed position for medal (one line below rank link)
-            const fixedMedalY = fixedRankLinkY + s(40, 'y');
+            
+            // FIXED POSITION for medal - exactly two lines below rank link
+            const fixedMedalY = fixedRankLinkY + s(60, 'y'); // Changed from 40 to 60 for two lines
             await drawRankMedal(ctx, canvas, student.rank, s(397), fixedMedalY, s(110));
-
-            // Date at bottom left
+            
+            // FIXED POSITION for date and certificate ID
+            // Always position these at a fixed distance from the bottom
             const fixedBottomY = height - s(50, 'y');
+            
+            // Date at bottom left
             ctx.textAlign = 'left';
             ctx.font = `${s(9)}px 'Libre Baskerville', serif`;
-            ctx.fillText("November 15, " + `${student.year}`, s(100), fixedBottomY);
-
-            // Certificate ID at bottom right
+            ctx.fillText("November 10, "+`${student.year}`, s(100), fixedBottomY);
+            
+            // Certificate ID at bottom right (using student_id)
             ctx.textAlign = 'right';
             ctx.font = `${s(9)}px 'Libre Baskerville', serif`;
             ctx.fillStyle = '#666666';
             ctx.fillText(`Certificate ID: ${student.student_id}`, s(694), fixedBottomY);
         }
 
-        // Calculate optimal font size for research title
+        // NEW FUNCTION: Calculate optimal font size for research title
         function calculateOptimalFontSize(ctx, text, maxWidth, maxLines, baseFontSize) {
             let fontSize = baseFontSize;
-            const minFontSize = 10;
+            let minFontSize = 9; // Minimum font size allowed
+            
+            // Keep reducing font size until text fits within maxLines
             while (fontSize > minFontSize) {
                 ctx.font = `${fontSize}px 'Libre Baskerville', serif`;
                 const lines = wrapText(ctx, text, maxWidth);
+                
                 if (lines.length <= maxLines) {
-                    break;
+                    break; // Text fits within maxLines, use current font size
                 }
-                fontSize -= 0.5;
+                
+                fontSize -= 0.6; // Reduce font size by 0.5px
             }
+            
+            // Ensure we don't go below minimum font size
             return Math.max(fontSize, minFontSize);
         }
 
-        // Draw flag from SVG
+        // Draw flag from SVG string
         function drawFlagFromSVG(ctx, svgString, x, y, width, height) {
             return new Promise((resolve) => {
+                // Create a temporary image element
                 const img = new Image();
                 const svgBlob = new Blob([svgString], {type: 'image/svg+xml;charset=utf-8'});
                 const url = URL.createObjectURL(svgBlob);
+                
                 img.onload = function() {
                     ctx.drawImage(img, x, y, width, height);
                     URL.revokeObjectURL(url);
@@ -859,57 +940,83 @@
                 };
                 img.onerror = function() {
                     URL.revokeObjectURL(url);
-                    resolve();
+                    resolve(); // Resolve even if error to not block rendering
                 };
                 img.src = url;
             });
         }
 
-        // Draw rank medal
+        // Draw rank medal with proper medal type
         async function drawRankMedal(ctx, canvas, rank, x, y, size) {
             ctx.save();
+            
+            // Get medal type
             const medalType = medalForRank(rank);
+            
+            // Draw medal based on type
             await drawMedalByType(ctx, medalType, x, y, size);
+            
+            // Draw rank text on medal
             ctx.fillStyle = '#333';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
-            ctx.font = `700 ${size * 0.3}px 'Playfair Display', serif`;
+            ctx.font = `700 ${size*0.3}px 'Playfair Display', serif`;
             ctx.fillText(rank, x, y);
+            
             ctx.restore();
         }
 
-        // Draw medal by type
+        // Draw medal based on type - FIXED VERSION
         async function drawMedalByType(ctx, medalType, x, y, size) {
+            // Use the programmatically created medal SVG
             const medalSvg = medals[medalType];
+            
             if (medalSvg) {
                 try {
                     await drawMedalFromSVG(ctx, medalSvg, x - size/2, y - size/2, size, size);
                 } catch (error) {
+                    console.error('Error drawing medal SVG:', error);
+                    // Fallback to drawn medal if SVG fails
                     drawFallbackMedal(ctx, medalType, x, y, size);
                 }
             } else {
+                // Fallback if no SVG is available
                 drawFallbackMedal(ctx, medalType, x, y, size);
             }
         }
 
-        // Draw fallback medal (circle)
+        // Draw fallback medal (circle-based)
         function drawFallbackMedal(ctx, medalType, x, y, size) {
+            // Draw medal background (circle)
             ctx.beginPath();
             ctx.arc(x, y, size/2, 0, Math.PI * 2);
-            switch (medalType) {
-                case 'gold': ctx.fillStyle = '#FFD700'; break;
-                case 'silver': ctx.fillStyle = '#C0C0C0'; break;
-                case 'bronze': ctx.fillStyle = '#CD7F32'; break;
-                case 'honorable': ctx.fillStyle = '#3ab573'; break;
-                default: ctx.fillStyle = '#c985e6';
+            
+            // Color based on medal type
+            switch(medalType) {
+                case 'gold':
+                    ctx.fillStyle = '#FFD700';
+                    break;
+                case 'silver':
+                    ctx.fillStyle = '#C0C0C0';
+                    break;
+                case 'bronze':
+                    ctx.fillStyle = '#CD7F32';
+                    break;
+                case 'honorable':
+                    ctx.fillStyle = '#3ab573';
+                    break;
+                default: // finalist
+                    ctx.fillStyle = '#c985e6';
             }
+            
             ctx.fill();
             ctx.strokeStyle = '#333';
             ctx.lineWidth = size * 0.03;
             ctx.stroke();
-
+            
+            // Add inner circle for medal design
             ctx.beginPath();
-            ctx.arc(x, y, size * 0.4, 0, Math.PI * 2);
+            ctx.arc(x, y, size*0.4, 0, Math.PI * 2);
             ctx.fillStyle = '#fff';
             ctx.fill();
             ctx.stroke();
@@ -921,6 +1028,7 @@
                 const img = new Image();
                 const svgBlob = new Blob([svgString], {type: 'image/svg+xml;charset=utf-8'});
                 const url = URL.createObjectURL(svgBlob);
+                
                 img.onload = function() {
                     ctx.drawImage(img, x, y, width, height);
                     URL.revokeObjectURL(url);
@@ -928,7 +1036,7 @@
                 };
                 img.onerror = function() {
                     URL.revokeObjectURL(url);
-                    resolve();
+                    resolve(); // Resolve even if error to not block rendering
                 };
                 img.src = url;
             });
@@ -938,12 +1046,13 @@
         function wrapText(ctx, text, maxWidth) {
             const words = text.split(' ');
             const lines = [];
-            let currentLine = words[0] || '';
+            let currentLine = words[0];
+            
             for (let i = 1; i < words.length; i++) {
                 const word = words[i];
-                const width = ctx.measureText(currentLine + ' ' + word).width;
+                const width = ctx.measureText(currentLine + " " + word).width;
                 if (width < maxWidth) {
-                    currentLine += ' ' + word;
+                    currentLine += " " + word;
                 } else {
                     lines.push(currentLine);
                     currentLine = word;
@@ -967,18 +1076,29 @@
         // Generate and download PDF certificate with metadata
         async function generateCertificatePDF(student) {
             const generatePdfBtn = document.getElementById('generatePdfBtn');
+            
+            // Disable button and show animation
             generatePdfBtn.disabled = true;
             generatePdfBtn.classList.add('generate-animation');
+            
+            // Show loading indicator
             document.getElementById('loadingIndicator').style.display = 'block';
-
+            
             try {
+                // Render certificate at high resolution
                 await renderCertificate(student, true);
+                
+                // Get canvas
                 const canvas = document.getElementById('certificateCanvas');
+                
+                // Create PDF with A4 dimensions in mm
                 const pdf = new jsPDF({
                     orientation: 'portrait',
                     unit: 'mm',
                     format: 'a4'
                 });
+                
+                // Set PDF metadata
                 pdf.setProperties({
                     title: `IARCO ${student.year} - ${student.name}`,
                     subject: `Certificate of Achievement - IARCO ${student.year}`,
@@ -986,22 +1106,33 @@
                     keywords: 'iarco, certificate, achievement, research, competition, academic',
                     creator: 'Md Sanaul Haque Shanto'
                 });
+                
+                // Generate random number for file naming
                 function generateRandomId1() {
-                    return Math.floor(1000 + Math.random() * 9000);
+                    return Math.floor(1000 + Math.random() * 9000); // Generates 4-digit random number
                 }
-                const imgWidth = 210;
+                // Calculate dimensions to fit A4
+                const imgWidth = 210.1; // A4 width in mm
                 const imgHeight = (canvas.height * imgWidth) / canvas.width;
-                const imgData = canvas.toDataURL('image/jpeg', 0.9);
+                
+                // Add canvas image to PDF
+                const imgData = canvas.toDataURL('image/jpeg', 0.9); // Use JPEG for smaller file size
                 pdf.addImage(imgData, 'JPEG', 0, 0, imgWidth, imgHeight);
-                const fileName = `IARCO_${student.year}_Finalist_${student.name.replace(/\\s+/g, '_')}_${generateRandomId1()}.pdf`;
+                
+                // Download PDF
+                const fileName = `IARCO_${student.year}_Finalist_${student.name.replace(/\s+/g, '_')}_${generateRandomId1()}.pdf`;
                 pdf.save(fileName);
+                
             } catch (error) {
                 console.error('Error generating PDF:', error);
                 alert('Failed to generate PDF. Please try again.');
             } finally {
+                // Re-enable button and hide animation
                 generatePdfBtn.disabled = false;
                 generatePdfBtn.classList.remove('generate-animation');
                 document.getElementById('loadingIndicator').style.display = 'none';
+                
+                // Re-render at preview resolution
                 renderCertificate(student, false);
             }
         }
@@ -1009,30 +1140,48 @@
         // Generate and download JPG certificate
         async function generateCertificateJPG(student) {
             const generateJpgBtn = document.getElementById('generateJpgBtn');
+            
+            // Disable button and show animation
             generateJpgBtn.disabled = true;
             generateJpgBtn.classList.add('generate-animation');
+            
+            // Show loading indicator
             document.getElementById('loadingIndicator').style.display = 'block';
-
+            
             try {
+                // Render certificate at high resolution
                 await renderCertificate(student, true);
+                
+                // Get canvas
                 const canvas = document.getElementById('certificateCanvas');
+                
+                // Convert canvas to JPG data URL
                 const jpgDataUrl = canvas.toDataURL('image/jpeg', 0.95);
+                
+                // Generate random number for file naming
                 function generateRandomId2() {
-                    return Math.floor(1000 + Math.random() * 9000);
+                    return Math.floor(1000 + Math.random() * 9000); // Generates 4-digit random number
                 }
+                // Create download link
                 const link = document.createElement('a');
-                link.download = `IARCO_${student.year}_Finalist_${student.name.replace(/\\s+/g, '_')}_${generateRandomId2()}.jpg`;
+                link.download = `IARCO_${student.year}_Finalist_${student.name.replace(/\s+/g, '_')}_${generateRandomId2()}.jpg`;
                 link.href = jpgDataUrl;
+                
+                // Trigger download
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
+                
             } catch (error) {
                 console.error('Error generating JPG:', error);
                 alert('Failed to generate JPG. Please try again.');
             } finally {
+                // Re-enable button and hide animation
                 generateJpgBtn.disabled = false;
                 generateJpgBtn.classList.remove('generate-animation');
                 document.getElementById('loadingIndicator').style.display = 'none';
+                
+                // Re-render at preview resolution
                 renderCertificate(student, false);
             }
         }
