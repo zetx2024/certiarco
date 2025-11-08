@@ -890,23 +890,12 @@
             
             // Fixed position for medal - always at the same position
             const fixedMedalY = s(800, 'y') + logoSpace;
-            await drawRankMedal(ctx, canvas, student.rank, s(397), fixedMedalY, s(110));
+            await drawRankMedal(ctx, canvas, student.rank, s(397), fixedMedalY, s(95));
             
             // FIXED POSITION for signature area - always at the same position
             const fixedSignatureY = height - s(150, 'y');
             
-            // Draw signature line and text
-            ctx.strokeStyle = '#0b0b0b';
-            ctx.lineWidth = s(1);
-            ctx.beginPath();
-            ctx.moveTo(s(597), fixedSignatureY);
-            ctx.lineTo(s(694), fixedSignatureY);
-            ctx.stroke();
             
-            // Signature text
-            ctx.textAlign = 'right';
-            ctx.font = `${s(10)}px 'Libre Baskerville', serif`;
-            ctx.fillText("Chairperson, IARCO Jury Board", s(694), fixedSignatureY + s(20, 'y'));
             
             // FIXED POSITION for date and certificate ID
             // Always position these at a fixed distance from the bottom
